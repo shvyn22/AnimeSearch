@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import shvyn22.animesearch.data.local.AppDatabase
-import shvyn22.animesearch.data.local.dao.FavoriteDao
+import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.util.DATABASE_NAME
 import javax.inject.Singleton
 
@@ -29,6 +29,6 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideFavoriteDao(db: AppDatabase): FavoriteDao =
-        db.favoriteDao()
+    fun provideBookmarkDao(db: AppDatabase): BookmarkDao =
+        db.bookmarkDao()
 }

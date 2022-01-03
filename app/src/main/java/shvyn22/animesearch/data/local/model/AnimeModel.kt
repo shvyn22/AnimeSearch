@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Favorite")
+@Entity(tableName = "Bookmark")
 data class AnimeModel(
 
     @ColumnInfo(name = "id")
@@ -16,4 +16,7 @@ data class AnimeModel(
 
     @ColumnInfo(name = "isAdult")
     val isAdult: Boolean,
+
+    @ColumnInfo(name = "image")
+    val image: String,
 )

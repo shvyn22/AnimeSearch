@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import shvyn22.animesearch.api.ApiInterface
-import shvyn22.animesearch.data.local.dao.FavoriteDao
+import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.model.AnimeModel
 import shvyn22.animesearch.data.remote.AnimeInfo
 import shvyn22.animesearch.repository.local.LocalRepository
@@ -21,8 +21,8 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideLocalRepository(
-        favoriteDao: FavoriteDao
-    ): LocalRepository<AnimeModel> = LocalRepositoryImpl(favoriteDao)
+        bookmarkDao: BookmarkDao
+    ): LocalRepository<AnimeModel> = LocalRepositoryImpl(bookmarkDao)
 
     @Singleton
     @Provides

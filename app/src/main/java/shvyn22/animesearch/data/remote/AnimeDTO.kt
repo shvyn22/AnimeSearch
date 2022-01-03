@@ -41,5 +41,13 @@ data class TitleInfo(
     val romaji: String,
 
     @SerializedName("english")
-    val english: String,
-)
+    val english: String?,
+) {
+
+    override fun toString(): String {
+        return if (english == null)
+            "$native ($romaji)"
+        else
+            "$native ($english)"
+    }
+}

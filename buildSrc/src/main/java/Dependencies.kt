@@ -24,10 +24,33 @@ object Dependencies {
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     }
 
+    object Tests {
+        private const val junitVersion = "4.13.2"
+        private const val junitExtVersion = "1.1.3"
+        private const val androidXTestCoreVersion = "1.4.0"
+        private const val hamcrestVersion = "1.3"
+        private const val archTestingVersion = "2.1.0"
+        private const val mockitoVersion = "3.11.1"
+        private const val espressoVersion = "3.4.0"
+
+        const val junit = "junit:junit:$junitVersion"
+        const val junitExt = "androidx.test.ext:junit:$junitExtVersion"
+        const val androidXTestCore = "androidx.test:core-ktx:$androidXTestCoreVersion"
+        const val hamcrest = "org.hamcrest:hamcrest-all:$hamcrestVersion"
+        const val archTesting = "androidx.arch.core:core-testing:$archTestingVersion"
+
+        const val mockitoCore = "org.mockito:mockito-core:$mockitoVersion"
+        const val mockitoAndroid = "org.mockito:mockito-android:$mockitoVersion"
+
+        const val espressoCore = "androidx.test.espresso:espresso-core:$espressoVersion"
+        const val espressoContrib = "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    }
+
     object Fragment {
         private const val fragmentVersion = "1.4.0"
 
         const val fragment = "androidx.fragment:fragment-ktx:$fragmentVersion"
+        const val fragmentTesting = "androidx.fragment:fragment-testing:$fragmentVersion"
     }
 
     object Lifecycle {
@@ -42,6 +65,7 @@ object Dependencies {
 
         const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
         const val navigationUi = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+        const val navigationTesting = "androidx.navigation:navigation-testing:$navigationVersion"
 
         const val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
     }
@@ -59,6 +83,7 @@ object Dependencies {
 
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+        const val coroutinesTesting = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
     }
 
     object Hilt {
@@ -69,6 +94,7 @@ object Dependencies {
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
         const val hiltAndroidCompiler = "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
         const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
+        const val hiltTesting = "com.google.dagger:hilt-android-testing:$hiltVersion"
 
         const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     }
