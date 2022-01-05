@@ -1,8 +1,10 @@
 package shvyn22.animesearch.data.remote
 
 import com.google.gson.annotations.SerializedName
+import shvyn22.animesearch.util.getPercentage
+import shvyn22.animesearch.util.toStringTime
 
-data class AnimeInfo(
+data class AnimeDTO(
     @SerializedName("anilist")
     val anilistInfo: AnilistInfo,
 
@@ -20,7 +22,16 @@ data class AnimeInfo(
 
     @SerializedName("image")
     val image: String,
-)
+) {
+
+    fun getSimilarityPercentage() : Int {
+        return similarity.getPercentage()
+    }
+
+    fun getFragmentRange() : Pair<String, String> {
+        return Pair(from.toStringTime(), to.toStringTime())
+    }
+}
 
 data class AnilistInfo(
     @SerializedName("id")

@@ -4,7 +4,7 @@ import okhttp3.MultipartBody
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
-import shvyn22.animesearch.data.remote.AnimeInfo
+import shvyn22.animesearch.data.remote.AnimeDTO
 
 interface ApiInterface {
 
@@ -12,5 +12,5 @@ interface ApiInterface {
     @POST("search?anilistInfo")
     suspend fun searchImage(
         @Part image: MultipartBody.Part
-    ): ApiResponse<AnimeInfo>
+    ): ApiResponse<AnimeDTO>
 }

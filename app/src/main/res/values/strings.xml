@@ -4,18 +4,24 @@
     <string name="nav_search">Search</string>
     <string name="nav_bookmarks">Bookmarks</string>
 
+    <string name="menu_mode">Night mode</string>
+    <string name="menu_delete">Delete</string>
+
     <string name="text_navigate_to_bookmarks">Check bookmarks</string>
     <string name="text_upload_from_file">From file</string>
     <string name="text_upload_from_camera">From camera</string>
     <string name="text_search">Search anime</string>
 
-    <string name="text_similarity">%d%</string>
+    <string name="text_similarity">%d%%</string>
     <string name="text_range">[%s .. %s]</string>
-    <string name="text_episode">EP%s</string>
-    <string name="text_anilist_id">Anilist id: %d</string>
+    <string name="text_episode">EP%d</string>
     <string name="text_title">Title: %s</string>
 
     <string name="text_hint">Swipe left or right to remove</string>
 
+    <string name="text_error">Error: %s</string>
+    <string name="text_error_no_bookmarks">No bookmarks found</string>
     <string name="text_error_fetching">Error fetching data</string>
+    <string name="text_error_loading">Error loading file</string>
+    <string name="text_error_permission">You should give camera permission to use all features</string>
 </resources>

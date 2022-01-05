@@ -1,20 +1,19 @@
 package shvyn22.animesearch.ui.bookmarks
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import shvyn22.animesearch.R
-import shvyn22.animesearch.data.local.model.AnimeModel
+import shvyn22.animesearch.data.local.model.Bookmark
 import shvyn22.animesearch.databinding.ItemBookmarkBinding
 import shvyn22.animesearch.util.defaultRequests
 
 class BookmarksAdapter(
     private val onNavigateToAnilist: (Int) -> Unit
-) : RecyclerView.Adapter<BookmarksAdapter.BookmarksViewHolder>() {
-
-    private val items = mutableListOf<AnimeModel>()
+) : ListAdapter<Bookmark, BookmarksAdapter.BookmarksViewHolder>(bookmarksDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarksViewHolder {
         return BookmarksViewHolder(
@@ -25,25 +24,16 @@ class BookmarksAdapter(
     }
 
     override fun onBindViewHolder(holder: BookmarksViewHolder, position: Int) {
-        val item = items.getOrNull(position)
+        val item = getItem(position)
 
         item?.let { holder.bind(it) }
-    }
-
-    override fun getItemCount(): Int = items.size
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateAndNotify(newItems: List<AnimeModel>) {
-        items.clear()
-        items.addAll(newItems)
-        notifyDataSetChanged()
     }
 
     inner class BookmarksViewHolder(
         private val binding: ItemBookmarkBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: AnimeModel) {
+        fun bind(item: Bookmark) {
             binding.apply {
                 tvTitle.text = item.title
 
@@ -52,7 +42,7 @@ class BookmarksAdapter(
                     else R.drawable.ic_not_adult
                 )
 
-                Glide.with(root)
+                Glide.with(itemView)
                     .load(item.image)
                     .defaultRequests()
                     .into(ivScreen)
@@ -61,6 +51,16 @@ class BookmarksAdapter(
                     onNavigateToAnilist(item.id)
                 }
             }
+        }
+    }
+
+    companion object {
+        private val bookmarksDiffUtil = object : DiffUtil.ItemCallback<Bookmark>() {
+            override fun areItemsTheSame(oldItem: Bookmark, newItem: Bookmark): Boolean =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: Bookmark, newItem: Bookmark): Boolean =
+                oldItem == newItem
         }
     }
 }

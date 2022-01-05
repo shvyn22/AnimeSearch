@@ -4,11 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
-import shvyn22.animesearch.api.ApiInterface
 import shvyn22.animesearch.api.FakeApiInterface
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.model.AnimeModel
-import shvyn22.animesearch.data.remote.AnimeInfo
+import shvyn22.animesearch.data.local.model.Bookmark
+import shvyn22.animesearch.data.remote.AnimeDTO
 import shvyn22.animesearch.repository.FakeLocalRepository
 import shvyn22.animesearch.repository.FakeRemoteRepository
 import shvyn22.animesearch.repository.local.LocalRepository
@@ -25,12 +25,13 @@ object FakeRepositoryModule {
     @Singleton
     @Provides
     fun provideLocalRepository(
-        bookmarkDao: BookmarkDao
-    ): LocalRepository<AnimeModel> = FakeLocalRepository(bookmarkDao)
+        bookmarkDao: BookmarkDao,
+    ): LocalRepository<Bookmark> = FakeLocalRepository(bookmarkDao)
 
     @Singleton
     @Provides
     fun provideRemoteRepository(
-        api: FakeApiInterface
-    ): RemoteRepository<AnimeInfo> = FakeRemoteRepository(api)
+        api: FakeApiInterface,
+        bookmarkDao: BookmarkDao,
+    ): RemoteRepository<AnimeModel> = FakeRemoteRepository(api, bookmarkDao)
 }

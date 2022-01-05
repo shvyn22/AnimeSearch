@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class FakePreferencesManager: PreferencesManager {
 
-    private val _nightMode = MutableStateFlow(AppCompatDelegate.MODE_NIGHT_NO)
+    private val _nightMode = MutableStateFlow(false)
 
-    override val nightMode: Flow<Int> get() = _nightMode
+    override val nightMode: Flow<Boolean> get() = _nightMode
 
-    override suspend fun editNightMode(nightMode: Int) {
+    override suspend fun editNightMode(nightMode: Boolean) {
         _nightMode.value = nightMode
     }
 }

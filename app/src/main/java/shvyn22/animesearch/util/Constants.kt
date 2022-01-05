@@ -5,3 +5,5 @@ const val ANILIST_URL = "https://anilist.co/anime/"
 
 const val DATASTORE_FILENAME = "preferences"
 const val DATABASE_NAME = "appDatabase"
+
+const val REGISTRY_KEY = "MainActivityRegistry"

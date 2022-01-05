@@ -4,7 +4,8 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface PreferencesManager {
-    val nightMode: Flow<Int>
 
-    suspend fun editNightMode(nightMode: Int)
+    val nightMode: Flow<Boolean>
+
+    suspend fun editNightMode(nightMode: Boolean)
 }

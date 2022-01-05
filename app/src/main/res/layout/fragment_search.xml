@@ -5,12 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_content_large"
+
     tools:context=".ui.search.SearchFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/content_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/padding_content_large"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/content_end"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/padding_content_large" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/content_start"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/padding_content_large" />
 
         <Button
             android:id="@+id/btn_bookmarks"
@@ -18,11 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_navigate_to_bookmarks"
-            app:icon="@drawable/ic_bookmark"
+            app:icon="@drawable/ic_not_favorite"
             app:iconGravity="textStart"
             app:iconSize="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="@id/content_end"
+            app:layout_constraintTop_toTopOf="@id/content_top" />
 
         <Button
             android:id="@+id/btn_from_file"
@@ -32,10 +53,10 @@
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/text_upload_from_file"
             app:icon="@drawable/ic_file"
-            app:layout_constraintTop_toBottomOf="@id/btn_bookmarks"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/btn_from_camera"
-            app:layout_constraintEnd_toStartOf="@id/btn_from_camera"/>
+            app:layout_constraintEnd_toStartOf="@id/btn_from_camera"
+            app:layout_constraintStart_toStartOf="@id/content_start"
+            app:layout_constraintTop_toBottomOf="@id/btn_bookmarks" />
 
         <Button
             android:id="@+id/btn_from_camera"
@@ -44,58 +65,64 @@
             android:layout_height="wrap_content"
             android:text="@string/text_upload_from_camera"
             app:icon="@drawable/ic_camera"
-            app:layout_constraintTop_toTopOf="@id/btn_from_file"
+            app:layout_constraintEnd_toEndOf="@id/content_end"
             app:layout_constraintStart_toEndOf="@id/btn_from_file"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/btn_from_file" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_preview"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_image_large"
             android:layout_height="@dimen/height_image_large"
             android:layout_marginTop="@dimen/margin_large"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/content_end"
+            app:layout_constraintStart_toStartOf="@id/content_start"
             app:layout_constraintTop_toBottomOf="@id/btn_from_camera"
-            tools:src="@tools:sample/backgrounds/scenic"/>
+            tools:src="@tools:sample/backgrounds/scenic" />
 
         <Button
             android:id="@+id/btn_search"
             style="@style/WideButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_search"
             android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/text_search"
             app:icon="@drawable/ic_search"
             app:iconGravity="textEnd"
             app:iconSize="28dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_preview"/>
+            app:layout_constraintEnd_toEndOf="@id/content_end"
+            app:layout_constraintStart_toStartOf="@id/content_start"
+            app:layout_constraintTop_toBottomOf="@id/iv_preview" />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_search"
+            android:id="@+id/group_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="iv_preview,btn_search" />
+            android:visibility="gone"
+            app:constraint_referenced_ids="iv_preview,btn_search, rv_result"
+            tools:visibility="visible"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_result"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_large"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_search"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/item_result"/>
+            app:layout_constraintEnd_toEndOf="@id/content_end"
+            app:layout_constraintStart_toStartOf="@id/content_start"
+            app:layout_constraintTop_toBottomOf="@id/btn_search"
+            tools:listitem="@layout/item_result"
+            tools:visibility="visible"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/pb_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:layout_gravity="center"
         android:indeterminate="true"
         android:indeterminateTintMode="src_atop"
-        android:layout_gravity="center" />
+        android:visibility="gone" />
 </FrameLayout>

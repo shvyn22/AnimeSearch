@@ -1,22 +1,12 @@
 package shvyn22.animesearch.data.local.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "Bookmark")
 data class AnimeModel(
-
-    @ColumnInfo(name = "id")
-    @PrimaryKey(autoGenerate = false)
     val id: Int,
-
-    @ColumnInfo(name = "title")
     val title: String,
-
-    @ColumnInfo(name = "isAdult")
+    val episode: Int,
+    val range: Pair<String, String>,
+    val similarity: Int,
     val isAdult: Boolean,
-
-    @ColumnInfo(name = "image")
     val image: String,
+    val isBookmarked: Boolean,
 )

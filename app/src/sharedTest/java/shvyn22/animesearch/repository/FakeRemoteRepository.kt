@@ -6,32 +6,41 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import shvyn22.animesearch.api.FakeApiInterface
-import shvyn22.animesearch.data.remote.AnimeInfo
+import shvyn22.animesearch.data.local.dao.BookmarkDao
+import shvyn22.animesearch.data.local.dao.FakeBookmarkDao
+import shvyn22.animesearch.data.local.model.AnimeModel
+import shvyn22.animesearch.data.util.fromAnimeDTOToModel
 import shvyn22.animesearch.repository.remote.RemoteRepository
+import shvyn22.animesearch.util.ErrorType
 import shvyn22.animesearch.util.Resource
-import java.io.InputStream
 
 class FakeRemoteRepository(
-    private val api: FakeApiInterface = FakeApiInterface()
-): RemoteRepository<AnimeInfo> {
+    private val api: FakeApiInterface = FakeApiInterface(),
+    private val bookmarkDao: BookmarkDao = FakeBookmarkDao(),
+) : RemoteRepository<AnimeModel> {
 
     override suspend fun searchImage(
-        inputStream: InputStream
-    ): Flow<Resource<List<AnimeInfo>>> = flow {
+        bytes: ByteArray
+    ): Flow<Resource<List<AnimeModel>>> = flow {
         emit(Resource.Loading())
 
         val response = api.searchImage(
             MultipartBody.Part.create(
                 RequestBody.create(
-                    MediaType.parse("image/*"),
-                    ""
+                    MediaType.parse("image/*"), ""
                 )
             )
         )
 
         if (response.error.isEmpty())
-            emit(Resource.Success(response.result))
+            emit(
+                Resource.Success(
+                    fromAnimeDTOToModel(response.result).map { model ->
+                        model.copy(isBookmarked = bookmarkDao.exists(model.id))
+                    }
+                )
+            )
         else
-            emit(Resource.Error(response.error))
+            emit(Resource.Error(ErrorType.Fetching))
     }
 }

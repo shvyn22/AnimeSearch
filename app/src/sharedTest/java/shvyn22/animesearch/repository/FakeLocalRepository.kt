@@ -4,21 +4,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.dao.FakeBookmarkDao
-import shvyn22.animesearch.data.local.model.AnimeModel
+import shvyn22.animesearch.data.local.model.Bookmark
 import shvyn22.animesearch.repository.local.LocalRepository
 import shvyn22.animesearch.util.Resource
+import shvyn22.animesearch.util.ErrorType
 
 class FakeLocalRepository(
     private val bookmarkDao: BookmarkDao = FakeBookmarkDao()
-): LocalRepository<AnimeModel> {
+): LocalRepository<Bookmark> {
 
-    override suspend fun getItems(): Flow<Resource<List<AnimeModel>>> =
+    override suspend fun getItems(): Flow<Resource<List<Bookmark>>> =
         bookmarkDao.getItems().map { items ->
-            if (items.isEmpty()) Resource.Error("")
+            if (items.isEmpty()) Resource.Error(ErrorType.NoBookmarks)
             else Resource.Success(items)
         }
 
-    override suspend fun insertItem(item: AnimeModel) = bookmarkDao.insert(item)
+    override suspend fun insertItem(item: Bookmark) = bookmarkDao.insert(item)
 
     override suspend fun deleteItem(id: Int) = bookmarkDao.delete(id)
 

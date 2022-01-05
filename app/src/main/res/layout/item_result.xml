@@ -83,7 +83,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_similarity"
             app:layout_constraintBottom_toTopOf="@id/iv_anilist"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_bookmark" />
+            android:src="@drawable/ic_not_favorite" />
 
         <ImageView
             android:id="@+id/iv_anilist"
