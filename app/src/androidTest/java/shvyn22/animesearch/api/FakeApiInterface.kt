@@ -6,7 +6,7 @@ import shvyn22.animesearch.util.ERROR_FETCHING
 
 class FakeApiInterface(
     private var shouldFail: Boolean = false
-): ApiInterface {
+) : ApiInterface {
 
     fun changeFailBehaviour(shouldFail: Boolean) {
         this.shouldFail = shouldFail

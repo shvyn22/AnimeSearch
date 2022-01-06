@@ -9,4 +9,6 @@ object Config {
     const val versionName = "1.0"
 
     const val testInstrumentationRunner = "shvyn22.animesearch.HiltTestRunner"
+
+    const val composeVersion = Dependencies.Compose.composeVersion
 }

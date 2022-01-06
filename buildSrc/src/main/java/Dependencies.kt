@@ -18,39 +18,28 @@ object Dependencies {
 
     object UI {
         private const val materialVersion = "1.6.0-alpha01"
-        private const val constraintLayoutVersion = "2.1.2"
 
         const val material = "com.google.android.material:material:$materialVersion"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     }
 
     object Tests {
         private const val junitVersion = "4.13.2"
         private const val junitExtVersion = "1.1.3"
         private const val androidXTestCoreVersion = "1.4.0"
-        private const val hamcrestVersion = "1.3"
-        private const val archTestingVersion = "2.1.0"
-        private const val mockitoVersion = "3.11.1"
         private const val espressoVersion = "3.4.0"
 
         const val junit = "junit:junit:$junitVersion"
         const val junitExt = "androidx.test.ext:junit:$junitExtVersion"
         const val androidXTestCore = "androidx.test:core-ktx:$androidXTestCoreVersion"
-        const val hamcrest = "org.hamcrest:hamcrest-all:$hamcrestVersion"
-        const val archTesting = "androidx.arch.core:core-testing:$archTestingVersion"
-
-        const val mockitoCore = "org.mockito:mockito-core:$mockitoVersion"
-        const val mockitoAndroid = "org.mockito:mockito-android:$mockitoVersion"
 
         const val espressoCore = "androidx.test.espresso:espresso-core:$espressoVersion"
-        const val espressoContrib = "androidx.test.espresso:espresso-contrib:$espressoVersion"
     }
 
-    object Fragment {
-        private const val fragmentVersion = "1.4.0"
+    object Activity {
+        private const val activityVersion = "1.4.0"
 
-        const val fragment = "androidx.fragment:fragment-ktx:$fragmentVersion"
-        const val fragmentTesting = "androidx.fragment:fragment-testing:$fragmentVersion"
+        const val activityKtx = "androidx.activity:activity-ktx:$activityVersion"
+        const val activityCompose = "androidx.activity:activity-compose:$activityVersion"
     }
 
     object Lifecycle {
@@ -63,11 +52,7 @@ object Dependencies {
     object Navigation {
         private const val navigationVersion = "2.3.5"
 
-        const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
-        const val navigationUi = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-        const val navigationTesting = "androidx.navigation:navigation-testing:$navigationVersion"
-
-        const val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
+        const val navigationCompose = "androidx.navigation:navigation-compose:$navigationVersion"
     }
 
     object Room {
@@ -83,18 +68,19 @@ object Dependencies {
 
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-        const val coroutinesTesting = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
     }
 
     object Hilt {
         private const val hiltVersion = "2.37"
         private const val hiltAndroidXVersion = "1.0.0-alpha03"
+        private const val hiltComposeVersion = "1.0.0-beta01"
 
         const val hiltAndroid = "com.google.dagger:hilt-android:$hiltVersion"
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
         const val hiltAndroidCompiler = "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
         const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
         const val hiltTesting = "com.google.dagger:hilt-android-testing:$hiltVersion"
+        const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:$hiltComposeVersion"
 
         const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     }
@@ -112,10 +98,29 @@ object Dependencies {
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     }
 
-    object Glide {
-        private const val glideVersion = "4.12.0"
+    object Coil {
+        private const val coilVersion = "1.4.0"
 
-        const val glide = "com.github.bumptech.glide:glide:$glideVersion"
+        const val coil = "io.coil-kt:coil-compose:$coilVersion"
+    }
+
+    object Compose {
+        internal const val composeVersion = "1.0.5"
+        private const val constraintComposeVersion = "1.0.0-rc02"
+
+        const val composeRuntime = "androidx.compose.runtime:runtime:$composeVersion"
+        const val composeUi = "androidx.compose.ui:ui:$composeVersion"
+        const val composeFoundation = "androidx.compose.foundation:foundation:$composeVersion"
+        const val composeFoundationLayout = "androidx.compose.foundation:foundation-layout:$composeVersion"
+        const val composeMaterial = "androidx.compose.material:material:$composeVersion"
+        const val composeMaterialIcons = "androidx.compose.material:material-icons-extended:$composeVersion"
+        const val composeAnimation = "androidx.compose.animation:animation:$composeVersion"
+        const val composeTooling = "androidx.compose.ui:ui-tooling:$composeVersion"
+        const val composeConstraint = "androidx.constraintlayout:constraintlayout-compose:$constraintComposeVersion"
+
+
+        const val composeUiTest = "androidx.compose.ui:ui-test-junit4:$composeVersion"
+        const val composeTestManifest = "androidx.compose.ui:ui-test-manifest:$composeVersion"
     }
 
     object Gradle {

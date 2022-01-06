@@ -1,10 +1,8 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-parcelize")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -35,11 +33,10 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        viewBinding = true
+        compose = true
     }
-    sourceSets {
-        get("androidTest").java.srcDirs("src/androidTest/java", "src/sharedTest/java")
-        get("test").java.srcDirs("src/test/java", "src/sharedTest/java")
+    composeOptions {
+        kotlinCompilerExtensionVersion = Config.composeVersion
     }
 }
 
@@ -52,43 +49,28 @@ dependencies {
     // AppCompat
     implementation(Dependencies.AppCompat.appCompat)
 
+    // Activity
+    implementation(Dependencies.Activity.activityKtx)
+
     // UI
     implementation(Dependencies.UI.material)
-    implementation(Dependencies.UI.constraintLayout)
 
     // Tests
-    testImplementation(Dependencies.Tests.junit)
-    testImplementation(Dependencies.Tests.androidXTestCore)
-    testImplementation(Dependencies.Tests.hamcrest)
-    testImplementation(Dependencies.Tests.archTesting)
-
     androidTestImplementation(Dependencies.Tests.junit)
     androidTestImplementation(Dependencies.Tests.junitExt)
     androidTestImplementation(Dependencies.Tests.androidXTestCore)
 
-    androidTestImplementation(Dependencies.Tests.mockitoCore)
-    androidTestImplementation(Dependencies.Tests.mockitoAndroid)
-
     androidTestImplementation(Dependencies.Tests.espressoCore)
-    androidTestImplementation(Dependencies.Tests.espressoContrib)
 
-    debugImplementation(Dependencies.Fragment.fragmentTesting)
-    androidTestImplementation(Dependencies.Navigation.navigationTesting)
-    testImplementation(Dependencies.Coroutines.coroutinesTesting)
-    androidTestImplementation(Dependencies.Coroutines.coroutinesTesting)
     androidTestImplementation(Dependencies.Hilt.hiltTesting)
     kaptAndroidTest(Dependencies.Hilt.hiltAndroidCompiler)
 
-    // Fragment
-    implementation(Dependencies.Fragment.fragment)
+    androidTestImplementation(Dependencies.Compose.composeUiTest)
+    debugImplementation(Dependencies.Compose.composeTestManifest)
 
     // Lifecycle
     implementation(Dependencies.Lifecycle.lifecycleRuntime)
     implementation(Dependencies.Lifecycle.lifecycleViewModel)
-
-    // Navigation
-    implementation(Dependencies.Navigation.navigationFragment)
-    implementation(Dependencies.Navigation.navigationUi)
 
     // Room
     implementation(Dependencies.Room.roomRuntime)
@@ -112,6 +94,20 @@ dependencies {
     implementation(Dependencies.Retrofit.retrofit)
     implementation(Dependencies.Retrofit.gsonConverter)
 
-    // Glide
-    implementation(Dependencies.Glide.glide)
+    // Coil
+    implementation(Dependencies.Coil.coil)
+
+    // Compose
+    implementation(Dependencies.Compose.composeRuntime)
+    implementation(Dependencies.Compose.composeUi)
+    implementation(Dependencies.Compose.composeFoundation)
+    implementation(Dependencies.Compose.composeFoundationLayout)
+    implementation(Dependencies.Compose.composeMaterial)
+    implementation(Dependencies.Compose.composeMaterialIcons)
+    implementation(Dependencies.Compose.composeAnimation)
+    implementation(Dependencies.Compose.composeTooling)
+    implementation(Dependencies.Compose.composeConstraint)
+    implementation(Dependencies.Activity.activityCompose)
+    implementation(Dependencies.Navigation.navigationCompose)
+    implementation(Dependencies.Hilt.hiltNavigationCompose)
 }
