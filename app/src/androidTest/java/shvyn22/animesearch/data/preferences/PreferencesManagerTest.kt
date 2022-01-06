@@ -3,8 +3,9 @@ package shvyn22.animesearch.data.preferences
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
@@ -15,6 +16,7 @@ import shvyn22.animesearch.di.tearDownPreferencesDependencies
 import javax.inject.Inject
 
 @HiltAndroidTest
+@ExperimentalCoroutinesApi
 class PreferencesManagerTest {
 
     @get:Rule
@@ -37,7 +39,7 @@ class PreferencesManagerTest {
     }
 
     @Test
-    fun editInitialMode_ReturnsModeNightYes() = runBlocking {
+    fun editInitialMode_ReturnsModeNightYes() = runTest {
 
         preferencesManager.editNightMode(true)
 
@@ -50,7 +52,8 @@ class PreferencesManagerTest {
     }
 
     @Test
-    fun toggleModes_ReturnsValidMode() = runBlocking {
+    fun toggleModes_ReturnsValidMode() = runTest {
+        preferencesManager.editNightMode(false)
         val initialMode = preferencesManager.nightMode.first()
 
         assertThat(

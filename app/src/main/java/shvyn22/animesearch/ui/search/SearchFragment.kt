@@ -28,7 +28,7 @@ class SearchFragment(
 
     private val requestPermission = registerForActivityResult(RequestPermission()) {
         if (!it) viewModel.onErrorOccurred(
-            ErrorType.Specified(getString(R.string.text_error_permission))
+            ResourceError.Specified(getString(R.string.text_error_permission))
         )
     }
 
@@ -105,8 +105,8 @@ class SearchFragment(
                     }
                     is StateEvent.ShowError -> root.showError(
                         when (it.error) {
-                            is ErrorType.Fetching -> getString(R.string.text_error_fetching)
-                            is ErrorType.Specified -> it.error.msg
+                            is ResourceError.Fetching -> getString(R.string.text_error_fetching)
+                            is ResourceError.Specified -> it.error.msg
                             else -> throw IllegalArgumentException()
                         }
                     )
@@ -118,7 +118,7 @@ class SearchFragment(
     private fun processGettingImageResult(uri: Uri?) {
         if (uri == null)
             viewModel.onErrorOccurred(
-                ErrorType.Specified(getString(R.string.text_error_loading))
+                ResourceError.Specified(getString(R.string.text_error_loading))
             )
         else
             viewModel.updateSelectedImage(uri.toString())

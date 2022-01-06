@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui
+package shvyn22.animesearch.ui.util
 
 import androidx.activity.result.ActivityResultRegistry
 import androidx.fragment.app.Fragment

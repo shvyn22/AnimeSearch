@@ -42,10 +42,20 @@ class SearchViewModelTest {
     }
 
     @Test
+    fun updateUri_ReturnsValidOne() = runTest {
+        viewModel.updateSelectedImage(IMAGE_URI)
+
+        val uri = viewModel.uri.value
+
+        assertThat(uri, `is`(IMAGE_URI))
+    }
+
+    @Test
     fun remoteIsAvailable_populateApiWith2Items_Returns2Items() = runTest {
         api.initResponse(animeDTOs)
 
-        val items = viewModel.searchImage().drop(1).first()
+        viewModel.searchImage(byteArrayOf())
+        val items = viewModel.searchResults.drop(1).first()
 
         assertThat(
             items,
@@ -60,7 +70,8 @@ class SearchViewModelTest {
 
     @Test
     fun remoteIsAvailable_populateApiWithNoItems_ReturnsError() = runTest {
-        val items = viewModel.searchImage().drop(1).first()
+        viewModel.searchImage(byteArrayOf())
+        val items = viewModel.searchResults.drop(1).first()
 
         assertThat(
             items,
@@ -69,14 +80,16 @@ class SearchViewModelTest {
 
         assertThat(
             (items as Resource.Error).error,
-            `is`(instanceOf(ErrorType.Fetching::class.java))
+            `is`(instanceOf(ResourceError.Fetching::class.java))
         )
     }
 
     @Test
     fun remoteIsNotAvailable_ReturnsError() = runTest {
         api.changeFailBehaviour(false)
-        val items = viewModel.searchImage().drop(1).first()
+
+        viewModel.searchImage(byteArrayOf())
+        val items = viewModel.searchResults.drop(1).first()
 
         assertThat(
             items,
@@ -85,14 +98,14 @@ class SearchViewModelTest {
 
         assertThat(
             (items as Resource.Error).error,
-            `is`(instanceOf(ErrorType.Fetching::class.java))
+            `is`(instanceOf(ResourceError.Fetching::class.java))
         )
     }
 
     @Test
     fun toggleInBookmarks_ReturnsValidState() = runTest {
         viewModel.onAddToBookmarks(fromAnimeDTOToModel(animeDTO1))
-        var bookmarks = dao.getItems().first()
+        var bookmarks = dao.getItems().drop(1).first()
 
         assertThat(
             bookmarks.size,
@@ -105,7 +118,7 @@ class SearchViewModelTest {
         )
 
         viewModel.onRemoveFromBookmarks(animeDTO1.anilistInfo.id)
-        bookmarks = dao.getItems().first()
+        bookmarks = dao.getItems().drop(1).first()
 
         assertThat(
             bookmarks.size,

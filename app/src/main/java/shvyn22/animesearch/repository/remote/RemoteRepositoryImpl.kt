@@ -9,7 +9,7 @@ import shvyn22.animesearch.api.ApiInterface
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.model.AnimeModel
 import shvyn22.animesearch.data.util.fromAnimeDTOToModel
-import shvyn22.animesearch.util.ErrorType
+import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.Resource
 
 class RemoteRepositoryImpl(
@@ -45,9 +45,9 @@ class RemoteRepositoryImpl(
                     )
                 }
             }
-            else emit(Resource.Error(ErrorType.Specified(response.error)))
+            else emit(Resource.Error(ResourceError.Specified(response.error)))
         } catch (e: Exception) {
-            emit(Resource.Error(ErrorType.Fetching))
+            emit(Resource.Error(ResourceError.Fetching))
         }
     }
 }

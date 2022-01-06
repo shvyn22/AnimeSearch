@@ -7,7 +7,7 @@ import shvyn22.animesearch.data.remote.TitleInfo
 
 const val ERROR_FETCHING = "error fetching data"
 const val TEST_DATASTORE_FILENAME = "test_preferences"
-const val IMAGE_URI = ""
+const val IMAGE_URI = "test_uri"
 
 val animeDTO1 = AnimeDTO(
     anilistInfo = AnilistInfo(

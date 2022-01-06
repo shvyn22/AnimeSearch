@@ -7,7 +7,7 @@ import shvyn22.animesearch.data.local.dao.FakeBookmarkDao
 import shvyn22.animesearch.data.local.model.Bookmark
 import shvyn22.animesearch.repository.local.LocalRepository
 import shvyn22.animesearch.util.Resource
-import shvyn22.animesearch.util.ErrorType
+import shvyn22.animesearch.util.ResourceError
 
 class FakeLocalRepository(
     private val bookmarkDao: BookmarkDao = FakeBookmarkDao()
@@ -15,7 +15,7 @@ class FakeLocalRepository(
 
     override suspend fun getItems(): Flow<Resource<List<Bookmark>>> =
         bookmarkDao.getItems().map { items ->
-            if (items.isEmpty()) Resource.Error(ErrorType.NoBookmarks)
+            if (items.isEmpty()) Resource.Error(ResourceError.NoBookmarks, items)
             else Resource.Success(items)
         }
 

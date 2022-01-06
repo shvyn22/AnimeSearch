@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/padding_content_large"/>
+            app:layout_constraintGuide_begin="@dimen/padding_content_large" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/content_end"
@@ -74,7 +74,7 @@
             android:layout_width="@dimen/width_image_large"
             android:layout_height="@dimen/height_image_large"
             android:layout_marginTop="@dimen/margin_large"
-            app:layout_constraintEnd_toEndOf="@id/content_end"
+            app:layout_constraintEnd_toStartOf="@id/btn_search"
             app:layout_constraintStart_toStartOf="@id/content_start"
             app:layout_constraintTop_toBottomOf="@id/btn_from_camera"
             tools:src="@tools:sample/backgrounds/scenic" />
@@ -84,14 +84,14 @@
             style="@style/WideButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/text_search"
             app:icon="@drawable/ic_search"
             app:iconGravity="textEnd"
-            app:iconSize="28dp"
+            app:iconSize="@dimen/size_icon"
+            app:layout_constraintBottom_toBottomOf="@id/iv_preview"
             app:layout_constraintEnd_toEndOf="@id/content_end"
-            app:layout_constraintStart_toStartOf="@id/content_start"
-            app:layout_constraintTop_toBottomOf="@id/iv_preview" />
+            app:layout_constraintStart_toEndOf="@id/iv_preview"
+            app:layout_constraintTop_toTopOf="@id/iv_preview" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_preview"
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:constraint_referenced_ids="iv_preview,btn_search, rv_result"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_result"
@@ -112,9 +112,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/content_end"
             app:layout_constraintStart_toStartOf="@id/content_start"
-            app:layout_constraintTop_toBottomOf="@id/btn_search"
+            app:layout_constraintTop_toBottomOf="@id/iv_preview"
             tools:listitem="@layout/item_result"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -124,5 +124,5 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:indeterminateTintMode="src_atop"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 </FrameLayout>

@@ -57,27 +57,31 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
         adapter: BookmarksAdapter,
     ) {
         binding.apply {
-            viewModel.getBookmarks().collectOnLifecycle(viewLifecycleOwner) {
-                pbLoading.isVisible = it is Resource.Loading
+            viewModel.getBookmarks().collectOnLifecycle(viewLifecycleOwner) { resource ->
+                pbLoading.isVisible = resource is Resource.Loading
 
-                if (it is Resource.Success)
-                    adapter.submitList(it.data)
-                else if (it is Resource.Error)
-                    viewModel.onErrorOccurred(it.error)
+                if (resource is Resource.Success)
+                    adapter.submitList(resource.data)
+                else if (resource is Resource.Error) {
+                    resource.data?.let { adapter.submitList(it) }
+                    viewModel.onErrorOccurred(resource.error)
+                }
             }
 
             viewModel.events.collectOnLifecycle(viewLifecycleOwner) {
                 when (it) {
                     is StateEvent.NavigateToAnilist -> {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ANILIST_URL + it.id))
+                        val intent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(ANILIST_URL + it.id)
+                        )
                         startActivity(intent)
                     }
                     is StateEvent.ShowError ->
                         when (it.error) {
-                            is ErrorType.Fetching -> root.showError(getString(R.string.text_error_fetching))
-                            is ErrorType.Specified -> root.showError(it.error.msg)
-                            is ErrorType.NoBookmarks -> {
-                                adapter.currentList.clear()
+                            is ResourceError.Fetching -> root.showError(getString(R.string.text_error_fetching))
+                            is ResourceError.Specified -> root.showError(it.error.msg)
+                            is ResourceError.NoBookmarks -> {
                                 tvBookmarksHint.text = getString(R.string.text_error_no_bookmarks)
                             }
                         }

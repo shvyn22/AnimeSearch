@@ -11,7 +11,7 @@ import shvyn22.animesearch.data.local.dao.FakeBookmarkDao
 import shvyn22.animesearch.data.local.model.AnimeModel
 import shvyn22.animesearch.data.util.fromAnimeDTOToModel
 import shvyn22.animesearch.repository.remote.RemoteRepository
-import shvyn22.animesearch.util.ErrorType
+import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.Resource
 
 class FakeRemoteRepository(
@@ -33,14 +33,20 @@ class FakeRemoteRepository(
         )
 
         if (response.error.isEmpty())
-            emit(
-                Resource.Success(
-                    fromAnimeDTOToModel(response.result).map { model ->
-                        model.copy(isBookmarked = bookmarkDao.exists(model.id))
-                    }
+            bookmarkDao.getItems().collect { bookmarks ->
+                emit(
+                    Resource.Success(
+                        fromAnimeDTOToModel(response.result)
+                            .distinctBy { it.id }
+                            .map { model ->
+                                model.copy(isBookmarked = bookmarks.any {
+                                    it.id == model.id
+                                })
+                            }
+                    )
                 )
-            )
+            }
         else
-            emit(Resource.Error(ErrorType.Fetching))
+            emit(Resource.Error(ResourceError.Fetching))
     }
 }

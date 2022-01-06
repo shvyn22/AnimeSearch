@@ -8,7 +8,6 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import shvyn22.animesearch.data.local.AppDatabase
 import shvyn22.animesearch.data.local.dao.BookmarkDao
-import shvyn22.animesearch.util.DATABASE_NAME
 import javax.inject.Singleton
 
 @Module

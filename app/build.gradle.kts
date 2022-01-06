@@ -17,7 +17,7 @@ android {
         versionCode = Config.versionCode
         versionName = Config.versionName
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Config.testInstrumentationRunner
     }
 
     buildTypes {

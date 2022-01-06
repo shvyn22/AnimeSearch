@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardViewStyle"
-    android:layout_marginVertical="@dimen/margin_small"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/margin_small">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,10 +17,11 @@
             android:id="@+id/iv_screen"
             android:layout_width="@dimen/width_image_small"
             android:layout_height="@dimen/height_image_small"
+            android:contentDescription="@string/text_accessibility_preview"
             android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView
@@ -28,11 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
-            android:padding="@dimen/padding_small"
             android:background="@color/green_400"
+            android:padding="@dimen/padding_small"
             android:text="@string/text_similarity"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_screen"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="97%" />
 
         <TextView
@@ -41,9 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_large"
             android:text="@string/text_episode"
-            app:layout_constraintTop_toTopOf="@id/tv_similarity"
             app:layout_constraintBottom_toBottomOf="@id/tv_similarity"
-            app:layout_constraintStart_toEndOf="@id/tv_similarity"/>
+            app:layout_constraintStart_toEndOf="@id/tv_similarity"
+            app:layout_constraintTop_toTopOf="@id/tv_similarity" />
 
         <TextView
             android:id="@+id/tv_range"
@@ -51,48 +52,51 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
             android:text="@string/text_range"
-            app:layout_constraintTop_toTopOf="@id/tv_similarity"
             app:layout_constraintBottom_toBottomOf="@id/tv_similarity"
             app:layout_constraintStart_toEndOf="@id/tv_episode"
-            tools:text="[56.7 .. 80.3]"/>
+            app:layout_constraintTop_toTopOf="@id/tv_similarity"
+            tools:text="[56.7 .. 80.3]" />
 
         <ImageView
             android:id="@+id/iv_is_adult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_large"
-            app:layout_constraintTop_toTopOf="@id/tv_similarity"
+            android:contentDescription="@string/text_accessibility_adult"
+            android:src="@drawable/ic_adult"
             app:layout_constraintBottom_toBottomOf="@id/tv_similarity"
             app:layout_constraintStart_toEndOf="@id/tv_range"
-            android:src="@drawable/ic_adult"/>
+            app:layout_constraintTop_toTopOf="@id/tv_similarity" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
-            app:layout_constraintTop_toBottomOf="@id/tv_similarity"
-            app:layout_constraintStart_toStartOf="@id/tv_similarity"
+            android:text="@string/text_title"
             app:layout_constraintEnd_toEndOf="@id/iv_is_adult"
-            android:text="@string/text_title"/>
+            app:layout_constraintStart_toStartOf="@id/tv_similarity"
+            app:layout_constraintTop_toBottomOf="@id/tv_similarity" />
 
         <ImageView
             android:id="@+id/iv_add_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/tv_similarity"
+            android:contentDescription="@string/text_accessibility_favorite"
+            android:src="@drawable/ic_not_favorite"
             app:layout_constraintBottom_toTopOf="@id/iv_anilist"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_not_favorite" />
+            app:layout_constraintTop_toTopOf="@id/tv_similarity" />
 
         <ImageView
             android:id="@+id/iv_anilist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_normal"
+            android:contentDescription="@string/text_accessibility_anilist"
             android:src="@drawable/ic_anilist"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintStart_toStartOf="@id/iv_add_bookmark"
-            app:layout_constraintTop_toBottomOf="@id/iv_add_bookmark"/>
+            app:layout_constraintTop_toBottomOf="@id/iv_add_bookmark" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

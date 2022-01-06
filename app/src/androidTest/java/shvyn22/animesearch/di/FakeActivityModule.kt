@@ -7,11 +7,12 @@ import androidx.core.net.toUri
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 
 @Module
 @TestInstallIn(
-    components = [ActivityComponent::class],
+    components = [SingletonComponent::class],
     replaces = [ActivityModule::class]
 )
 object FakeActivityModule {
@@ -25,7 +26,7 @@ object FakeActivityModule {
             input: I,
             options: ActivityOptionsCompat?
         ) {
-            dispatchResult(requestCode, "".toUri())
+            dispatchResult(requestCode, true)
         }
     }
 }

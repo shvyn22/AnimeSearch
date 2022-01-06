@@ -2,6 +2,7 @@ package shvyn22.animesearch.ui.bookmarks
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.`is`
@@ -53,9 +54,6 @@ class BookmarksViewModelTest {
 
     @Test
     fun populateDaoWithNoItems_ReturnsError() = runTest {
-        dao.insert(bookmark1)
-        dao.insert(bookmark2)
-
         val resource = viewModel.getBookmarks().first()
         assertThat(resource, `is`(instanceOf(Resource.Error::class.java)))
     }
@@ -67,9 +65,9 @@ class BookmarksViewModelTest {
 
         viewModel.onRemoveFromBookmarks(bookmark1.id)
 
-        val bookmarks = dao.getItems().first()
+        val bookmarks = dao.getItems().drop(1).first()
         assertThat(bookmarks.size, `is`(1))
-        assertThat(bookmarks[1].id, `is`(bookmark2.id))
+        assertThat(bookmarks[0].id, `is`(bookmark2.id))
     }
 
     @Test
@@ -79,7 +77,7 @@ class BookmarksViewModelTest {
 
         viewModel.onRemoveAllFromBookmarks()
 
-        val bookmarks = dao.getItems().first()
+        val bookmarks = dao.getItems().drop(1).first()
         assertThat(bookmarks.size, `is`(0))
     }
 }

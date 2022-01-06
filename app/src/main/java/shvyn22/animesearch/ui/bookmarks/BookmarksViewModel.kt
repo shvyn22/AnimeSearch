@@ -3,11 +3,13 @@ package shvyn22.animesearch.ui.bookmarks
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import shvyn22.animesearch.data.local.model.Bookmark
 import shvyn22.animesearch.repository.local.LocalRepository
-import shvyn22.animesearch.util.ErrorType
+import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.StateEvent
 import javax.inject.Inject
 
@@ -16,8 +18,8 @@ class BookmarksViewModel @Inject constructor(
     private val localRepository: LocalRepository<Bookmark>,
 ) : ViewModel() {
 
-    private val eventsChannel = MutableSharedFlow<StateEvent>()
-    val events = eventsChannel.asSharedFlow()
+    private val _events = Channel<StateEvent>()
+    val events = _events.receiveAsFlow()
 
     fun getBookmarks() = flow {
         localRepository.getItems().collect {
@@ -39,13 +41,13 @@ class BookmarksViewModel @Inject constructor(
 
     fun onNavigateToAnilist(id: Int) {
         viewModelScope.launch {
-            eventsChannel.emit(StateEvent.NavigateToAnilist(id))
+            _events.send(StateEvent.NavigateToAnilist(id))
         }
     }
 
-    fun onErrorOccurred(error: ErrorType) {
+    fun onErrorOccurred(error: ResourceError) {
         viewModelScope.launch {
-            eventsChannel.emit(StateEvent.ShowError(error))
+            _events.send(StateEvent.ShowError(error))
         }
     }
 }

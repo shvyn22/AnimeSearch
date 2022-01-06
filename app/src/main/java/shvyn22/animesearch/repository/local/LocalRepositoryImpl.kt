@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.model.Bookmark
-import shvyn22.animesearch.util.ErrorType
+import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.Resource
 
 class LocalRepositoryImpl(
@@ -13,7 +13,7 @@ class LocalRepositoryImpl(
 
     override suspend fun getItems(): Flow<Resource<List<Bookmark>>> =
         bookmarkDao.getItems().map { items ->
-            if (items.isEmpty()) Resource.Error(ErrorType.NoBookmarks)
+            if (items.isEmpty()) Resource.Error(ResourceError.NoBookmarks, items)
             else Resource.Success(items)
         }
 

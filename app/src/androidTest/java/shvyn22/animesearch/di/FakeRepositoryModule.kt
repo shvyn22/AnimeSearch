@@ -8,7 +8,6 @@ import shvyn22.animesearch.api.FakeApiInterface
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.model.AnimeModel
 import shvyn22.animesearch.data.local.model.Bookmark
-import shvyn22.animesearch.data.remote.AnimeDTO
 import shvyn22.animesearch.repository.FakeLocalRepository
 import shvyn22.animesearch.repository.FakeRemoteRepository
 import shvyn22.animesearch.repository.local.LocalRepository

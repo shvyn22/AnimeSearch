@@ -24,4 +24,9 @@
     <string name="text_error_fetching">Error fetching data</string>
     <string name="text_error_loading">Error loading file</string>
     <string name="text_error_permission">You should give camera permission to use all features</string>
+
+    <string name="text_accessibility_adult">Is adult?</string>
+    <string name="text_accessibility_favorite">Is favorite?</string>
+    <string name="text_accessibility_anilist">Navigate to Anilist</string>
+    <string name="text_accessibility_preview">Image preview</string>
 </resources>

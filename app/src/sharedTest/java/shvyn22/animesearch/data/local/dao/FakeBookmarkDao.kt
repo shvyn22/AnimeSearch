@@ -1,29 +1,30 @@
 package shvyn22.animesearch.data.local.dao
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import shvyn22.animesearch.data.local.model.Bookmark
 
 class FakeBookmarkDao: BookmarkDao {
 
-    private val bookmarks = mutableListOf<Bookmark>()
+    private val _bookmarks = MutableStateFlow(listOf<Bookmark>())
+    private val bookmarks get() = _bookmarks.asStateFlow()
 
     override fun getItems(): Flow<List<Bookmark>> = flow {
-        emit(bookmarks)
+        bookmarks.collect { emit(it) }
     }
 
-    override fun exists(id: Int): Boolean =
-        bookmarks.find { it.id == id } != null
-
     override suspend fun insert(item: Bookmark) {
-        bookmarks.add(item)
+        val newBookmarks = _bookmarks.value.toMutableList()
+        _bookmarks.value = newBookmarks.also { it.add(item) }
     }
 
     override suspend fun delete(id: Int) {
-        bookmarks.removeIf { it.id == id }
+        val newBookmarks = _bookmarks.value.toMutableList()
+        _bookmarks.value = newBookmarks.also {
+            it.removeIf { bookmark -> bookmark.id == id }
+        }
     }
 
     override suspend fun deleteAll() {
-        bookmarks.clear()
+        _bookmarks.value = emptyList()
     }
 }

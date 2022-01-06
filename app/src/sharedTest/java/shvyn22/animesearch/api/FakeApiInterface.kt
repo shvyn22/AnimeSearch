@@ -12,19 +12,19 @@ class FakeApiInterface(
         this.shouldFail = shouldFail
     }
 
-    private val animeInfos = mutableListOf<AnimeDTO>()
+    private val animeDTOs = mutableListOf<AnimeDTO>()
 
     fun initResponse(items: List<AnimeDTO>) {
-        animeInfos.clear()
-        animeInfos.addAll(items)
+        animeDTOs.clear()
+        animeDTOs.addAll(items)
     }
 
     override suspend fun searchImage(
         image: MultipartBody.Part
     ): ApiResponse<AnimeDTO> {
-        return if (shouldFail || animeInfos.isEmpty())
+        return if (shouldFail || animeDTOs.isEmpty())
             ApiResponse(error = ERROR_FETCHING, result = emptyList())
         else
-            ApiResponse(error = "", result = animeInfos)
+            ApiResponse(error = "", result = animeDTOs)
     }
 }

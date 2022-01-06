@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui
+package shvyn22.animesearch.ui.util
 
 import android.content.Context
 import androidx.navigation.fragment.NavHostFragment

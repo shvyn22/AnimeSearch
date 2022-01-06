@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.annotation.StyleRes
 import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.core.app.ActivityScenario
@@ -17,7 +18,8 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
     @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
     navController: NavController? = null,
-    crossinline action: Fragment.() -> Unit = {}
+    fragmentFactory: FragmentFactory? = null,
+    crossinline action: Fragment.() -> Unit = {},
 ) {
     val startActivityIntent = Intent.makeMainActivity(
         ComponentName(
@@ -30,6 +32,9 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     )
 
     ActivityScenario.launch<HiltTestActivity>(startActivityIntent).onActivity { activity ->
+        fragmentFactory?.let {
+            activity.supportFragmentManager.fragmentFactory = it
+        }
         val fragment: Fragment = activity.supportFragmentManager.fragmentFactory.instantiate(
             Preconditions.checkNotNull(T::class.java.classLoader),
             T::class.java.name

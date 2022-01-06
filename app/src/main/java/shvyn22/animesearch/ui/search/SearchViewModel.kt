@@ -13,7 +13,7 @@ import shvyn22.animesearch.data.local.model.Bookmark
 import shvyn22.animesearch.data.util.fromAnimeModelToBookmark
 import shvyn22.animesearch.repository.local.LocalRepository
 import shvyn22.animesearch.repository.remote.RemoteRepository
-import shvyn22.animesearch.util.ErrorType
+import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.Resource
 import shvyn22.animesearch.util.StateEvent
 import javax.inject.Inject
@@ -33,13 +33,13 @@ class SearchViewModel @Inject constructor(
     private val _searchResults = MutableStateFlow<Resource<List<AnimeModel>>>(Resource.Idle())
     val searchResults = _searchResults.asStateFlow()
 
-    fun updateSelectedImage(newBytes: String) {
-        _uri.value = newBytes
+    fun updateSelectedImage(newUri: String) {
+        _uri.value = newUri
     }
 
-    fun searchImage(byteArray: ByteArray) {
+    fun searchImage(bytes: ByteArray) {
         viewModelScope.launch {
-            remoteRepository.searchImage(byteArray).collect {
+            remoteRepository.searchImage(bytes).collect {
                 _searchResults.value = it
             }
         }
@@ -47,9 +47,7 @@ class SearchViewModel @Inject constructor(
 
     fun onAddToBookmarks(item: AnimeModel) {
         viewModelScope.launch {
-            localRepository.insertItem(
-                fromAnimeModelToBookmark(item)
-            )
+            localRepository.insertItem(fromAnimeModelToBookmark(item))
         }
     }
 
@@ -65,7 +63,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onErrorOccurred(error: ErrorType) {
+    fun onErrorOccurred(error: ResourceError) {
         viewModelScope.launch {
             _events.send(StateEvent.ShowError(error))
         }
