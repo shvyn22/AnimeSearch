@@ -44,7 +44,7 @@ fun BookmarksScreen(
 		onRemoveFromBookmarks = viewModel::onRemoveFromBookmarks,
 		onNavigateToAnilist = viewModel::onNavigateToAnilist,
 		onErrorOccurred = viewModel::onErrorOccurred,
-		modifier = modifier
+		modifier = modifier,
 	)
 }
 
@@ -54,12 +54,12 @@ fun BookmarksContent(
 	onRemoveFromBookmarks: (Int) -> Unit,
 	onNavigateToAnilist: (Int) -> Unit,
 	onErrorOccurred: (ResourceError) -> Unit,
-	modifier: Modifier = Modifier
+	modifier: Modifier = Modifier,
 ) {
 	Column(
 		horizontalAlignment = Alignment.CenterHorizontally,
 		modifier = modifier
-			.fillMaxWidth(),
+			.fillMaxWidth()
 	) {
 		var bookmarks = emptyList<Bookmark>()
 		var hintText by remember { mutableStateOf("") }

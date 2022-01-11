@@ -139,7 +139,7 @@ fun ResultItem(
 			)
 
 			Text(
-				text = model.title,
+				text = stringResource(id = R.string.text_title, model.title),
 				style = MaterialTheme.typography.body2,
 				modifier = Modifier
 					.constrainAs(tvTitle) {

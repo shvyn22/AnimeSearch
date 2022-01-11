@@ -38,7 +38,7 @@ fun AppBar(
 				) {
 					Icon(
 						imageVector = Icons.Filled.Delete,
-						contentDescription = null
+						contentDescription = stringResource(id = R.string.text_accessibility_remove)
 					)
 				}
 			}
@@ -48,7 +48,7 @@ fun AppBar(
 			) {
 				Icon(
 					imageVector = if (isNightMode) Icons.Filled.LightMode else Icons.Filled.DarkMode,
-					contentDescription = null
+					contentDescription = stringResource(id = R.string.text_accessibility_mode)
 				)
 			}
 		},

@@ -68,7 +68,7 @@ fun BookmarkItem(
 			)
 
 			Text(
-				text = bookmark.title,
+				text = stringResource(id = R.string.text_title, bookmark.title),
 				style = MaterialTheme.typography.body2,
 				modifier = Modifier
 					.constrainAs(tvTitle) {

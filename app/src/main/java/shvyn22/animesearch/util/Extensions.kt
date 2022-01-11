@@ -31,5 +31,5 @@ fun Float.getPercentage(): Int =
 fun Float.toStringTime(): String {
     val minutes = this / 60
     val seconds = ((minutes - minutes.toInt()) * 60).toInt()
-    return "${minutes.toInt()}:$seconds"
+    return "%02d:%02d".format(minutes.toInt(), seconds)
 }

@@ -26,7 +26,7 @@ import shvyn22.animesearch.util.ResourceError
 fun MainScreen(
 	isNightMode: Boolean,
 	onToggleMode: () -> Unit,
-	modifier: Modifier = Modifier
+	modifier: Modifier = Modifier,
 ) {
 	val navController = rememberNavController()
 	val navBackStackEntry by navController.currentBackStackEntryAsState()

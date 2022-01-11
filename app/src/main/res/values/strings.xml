@@ -19,7 +19,6 @@
 
     <string name="text_hint">Swipe left or right to remove</string>
 
-    <string name="text_error">Error: %s</string>
     <string name="text_error_no_bookmarks">No bookmarks found</string>
     <string name="text_error_fetching">Error fetching data</string>
     <string name="text_error_loading">Error loading file</string>
@@ -30,4 +29,6 @@
     <string name="text_accessibility_anilist">Navigate to Anilist</string>
     <string name="text_accessibility_preview">Image preview</string>
     <string name="text_accessibility_back">Return to Search screen</string>
+    <string name="text_accessibility_mode">Change mode</string>
+    <string name="text_accessibility_remove">Remove all bookmarks</string>
 </resources>
