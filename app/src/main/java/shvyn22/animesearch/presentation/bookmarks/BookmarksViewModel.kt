@@ -15,39 +15,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarksViewModel @Inject constructor(
-    private val localRepository: LocalRepository<Bookmark>,
+	private val localRepository: LocalRepository<Bookmark>,
 ) : ViewModel() {
 
-    private val _events = Channel<StateEvent>()
-    val events = _events.receiveAsFlow()
+	private val _events = Channel<StateEvent>()
+	val events = _events.receiveAsFlow()
 
-    fun getBookmarks() = flow {
-        localRepository.getItems().collect {
-            emit(it)
-        }
-    }
+	fun getBookmarks() = flow {
+		localRepository.getItems().collect {
+			emit(it)
+		}
+	}
 
-    fun onRemoveFromBookmarks(id: Int) {
-        viewModelScope.launch {
-            localRepository.deleteItem(id)
-        }
-    }
+	fun onRemoveFromBookmarks(id: Int) {
+		viewModelScope.launch {
+			localRepository.deleteItem(id)
+		}
+	}
 
-    fun onRemoveAllFromBookmarks() {
-        viewModelScope.launch {
-            localRepository.deleteItems()
-        }
-    }
+	fun onRemoveAllFromBookmarks() {
+		viewModelScope.launch {
+			localRepository.deleteItems()
+		}
+	}
 
-    fun onNavigateToAnilist(id: Int) {
-        viewModelScope.launch {
-            _events.send(StateEvent.NavigateToAnilist(id))
-        }
-    }
+	fun onNavigateToAnilist(id: Int) {
+		viewModelScope.launch {
+			_events.send(StateEvent.NavigateToAnilist(id))
+		}
+	}
 
-    fun onErrorOccurred(error: ResourceError) {
-        viewModelScope.launch {
-            _events.send(StateEvent.ShowError(error))
-        }
-    }
+	fun onErrorOccurred(error: ResourceError) {
+		viewModelScope.launch {
+			_events.send(StateEvent.ShowError(error))
+		}
+	}
 }

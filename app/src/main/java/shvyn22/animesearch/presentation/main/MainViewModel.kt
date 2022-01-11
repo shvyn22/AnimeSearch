@@ -1,4 +1,4 @@
-package shvyn22.animesearch.presentation
+package shvyn22.animesearch.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

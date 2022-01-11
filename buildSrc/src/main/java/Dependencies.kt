@@ -1,7 +1,7 @@
 object Dependencies {
 
     object Kotlin {
-        private const val kotlinVersion = "1.6.10"
+        private const val kotlinVersion = "1.6.0"
         private const val ktxVersion = "1.7.0"
 
         const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -105,8 +105,9 @@ object Dependencies {
     }
 
     object Compose {
-        internal const val composeVersion = "1.0.5"
+        internal const val composeVersion = "1.1.0-rc01"
         private const val constraintComposeVersion = "1.0.0-rc02"
+        private const val accompanistVersion = "0.17.0"
 
         const val composeRuntime = "androidx.compose.runtime:runtime:$composeVersion"
         const val composeUi = "androidx.compose.ui:ui:$composeVersion"
@@ -117,6 +118,7 @@ object Dependencies {
         const val composeAnimation = "androidx.compose.animation:animation:$composeVersion"
         const val composeTooling = "androidx.compose.ui:ui-tooling:$composeVersion"
         const val composeConstraint = "androidx.constraintlayout:constraintlayout-compose:$constraintComposeVersion"
+        const val composeAccompanistSystemUi = "com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion"
 
 
         const val composeUiTest = "androidx.compose.ui:ui-test-junit4:$composeVersion"

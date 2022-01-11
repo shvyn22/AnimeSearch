@@ -107,6 +107,7 @@ dependencies {
     implementation(Dependencies.Compose.composeAnimation)
     implementation(Dependencies.Compose.composeTooling)
     implementation(Dependencies.Compose.composeConstraint)
+    implementation(Dependencies.Compose.composeAccompanistSystemUi)
     implementation(Dependencies.Activity.activityCompose)
     implementation(Dependencies.Navigation.navigationCompose)
     implementation(Dependencies.Hilt.hiltNavigationCompose)

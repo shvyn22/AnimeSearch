@@ -1,5 +1,0 @@
-<resources>
-    <style name="Theme.AnimeSearch" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-    </style>
-</resources>
