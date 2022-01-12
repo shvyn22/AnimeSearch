@@ -10,6 +10,7 @@ import shvyn22.animesearch.R
 import shvyn22.animesearch.presentation.bookmarks.BookmarksScreen
 import shvyn22.animesearch.presentation.search.SearchScreen
 import shvyn22.animesearch.util.ResourceError
+import shvyn22.animesearch.util.image.ImagePicker
 
 enum class Routes(
 	val route: String,
@@ -22,6 +23,7 @@ enum class Routes(
 @Composable
 fun NavigationConfig(
 	navController: NavHostController,
+	imagePicker: ImagePicker,
 	onNavigateToAnilist: (Int) -> Unit,
 	onErrorOccurred: (ResourceError) -> Unit,
 	onChangeRemoveAll: (() -> Unit) -> Unit,
@@ -33,6 +35,7 @@ fun NavigationConfig(
 	) {
 		composable(Routes.Search.route) {
 			SearchScreen(
+				imagePicker = imagePicker,
 				onNavigateToBookmarks = {
 					navController.navigate(Routes.Bookmarks.route)
 				},

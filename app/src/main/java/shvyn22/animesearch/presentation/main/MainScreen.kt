@@ -21,11 +21,13 @@ import shvyn22.animesearch.presentation.ui.components.Routes
 import shvyn22.animesearch.presentation.ui.theme.dimens
 import shvyn22.animesearch.util.ANILIST_URL
 import shvyn22.animesearch.util.ResourceError
+import shvyn22.animesearch.util.image.ImagePicker
 
 @Composable
 fun MainScreen(
 	isNightMode: Boolean,
 	onToggleMode: () -> Unit,
+	imagePicker: ImagePicker,
 	modifier: Modifier = Modifier,
 ) {
 	val navController = rememberNavController()
@@ -59,6 +61,7 @@ fun MainScreen(
 	) {
 		NavigationConfig(
 			navController = navController,
+			imagePicker = imagePicker,
 			onNavigateToAnilist = {
 				val intent = Intent(
 					Intent.ACTION_VIEW,

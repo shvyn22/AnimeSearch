@@ -32,6 +32,8 @@ object Size {
     val heightImage = 60.dp
     val smallIconSize = 24.dp
     val largeIconSize = 32.dp
+
+    val widthButtonMin = 150.dp
 }
 
 data class Dimens(

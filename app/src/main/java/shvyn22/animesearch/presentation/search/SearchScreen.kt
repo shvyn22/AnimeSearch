@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,10 +32,11 @@ import shvyn22.animesearch.presentation.ui.theme.dimens
 import shvyn22.animesearch.util.Resource
 import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.StateEvent
-import shvyn22.animesearch.util.createTempUri
+import shvyn22.animesearch.util.image.ImagePicker
 
 @Composable
 fun SearchScreen(
+	imagePicker: ImagePicker,
 	onNavigateToBookmarks: () -> Unit,
 	onNavigateToAnilist: (Int) -> Unit,
 	onErrorOccurred: (ResourceError) -> Unit,
@@ -43,7 +44,6 @@ fun SearchScreen(
 	viewModel: SearchViewModel = hiltViewModel(),
 ) {
 	val context = LocalContext.current
-	val cameraUri = context.createTempUri()
 
 	val processResult = { uri: Uri? ->
 		if (uri == null)
@@ -53,19 +53,10 @@ fun SearchScreen(
 		else
 			viewModel.updateSelectedImage(uri.toString())
 	}
-
-	val getImageFromFile = rememberLauncherForActivityResult(GetContent()) {
-		processResult(it)
-	}
-
 	val requestPermission = rememberLauncherForActivityResult(RequestPermission()) {
 		if (!it) viewModel.onErrorOccurred(
 			ResourceError.Specified(context.getString(R.string.text_error_permission))
 		)
-	}
-
-	val getImageFromCamera = rememberLauncherForActivityResult(TakePicture()) {
-		processResult(if (it) cameraUri else null)
 	}
 
 	val events = viewModel.events.collectAsState(initial = null)
@@ -80,13 +71,13 @@ fun SearchScreen(
 	SearchContent(
 		previewUri = uri.value,
 		searchResource = searchResults.value,
-		onGetImageFromFile = { getImageFromFile.launch("image/*") },
+		onGetImageFromFile = { imagePicker.pickImageFromFile(processResult) },
 		onGetImageFromCamera = {
 			if (context.checkSelfPermission(
 					Manifest.permission.CAMERA
 				) == PackageManager.PERMISSION_GRANTED
 			)
-				getImageFromCamera.launch(cameraUri)
+				imagePicker.pickImageFromCamera(processResult)
 			else
 				requestPermission.launch(Manifest.permission.CAMERA)
 		},
