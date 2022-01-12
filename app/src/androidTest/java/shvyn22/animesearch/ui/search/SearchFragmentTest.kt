@@ -16,10 +16,7 @@ import org.junit.Test
 import shvyn22.animesearch.R
 import shvyn22.animesearch.api.FakeApiInterface
 import shvyn22.animesearch.ui.util.MainFragmentFactory
-import shvyn22.animesearch.util.animeDTO1
-import shvyn22.animesearch.util.animeDTO2
-import shvyn22.animesearch.util.launchFragmentInHiltContainer
-import shvyn22.animesearch.util.withItemCount
+import shvyn22.animesearch.util.*
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -44,8 +41,8 @@ class SearchFragmentTest {
     }
 
     @Test
-    fun remoteIsAvailable_populateApiWith2Items_2itemsAreInView() {
-        api.initResponse(listOf(animeDTO1, animeDTO2))
+    fun remoteIsAvailable_populateApiWith2Items_2ItemsAreInView() {
+        api.initResponse(animeDTOs)
 
         onView(withId(R.id.btn_from_file))
             .perform(click())

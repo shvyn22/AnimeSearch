@@ -39,7 +39,7 @@ class BookmarksFragmentTest {
     }
 
     @Test
-    fun populateDaoWith2Items_2ItemAreInView() {
+    fun populateDaoWith2Items_2ItemsAreInView() {
         runTest {
             bookmarkDao.insert(bookmark1)
             bookmarkDao.insert(bookmark2)
@@ -57,7 +57,7 @@ class BookmarksFragmentTest {
     }
 
     @Test
-    fun populateDaoWith1Items_1ItemIsInView() {
+    fun populateDaoWith1Item_1ItemIsInView() {
         runTest {
             bookmarkDao.insert(bookmark1)
         }
