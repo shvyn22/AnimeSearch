@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui
+package shvyn22.animesearch.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

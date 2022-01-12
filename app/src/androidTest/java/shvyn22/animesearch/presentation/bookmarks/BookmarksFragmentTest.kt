@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui.bookmarks
+package shvyn22.animesearch.presentation.bookmarks
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click

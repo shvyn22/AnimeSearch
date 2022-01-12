@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui.search
+package shvyn22.animesearch.presentation.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi

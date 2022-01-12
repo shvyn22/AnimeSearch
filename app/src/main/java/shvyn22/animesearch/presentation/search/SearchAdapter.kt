@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui.search
+package shvyn22.animesearch.presentation.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui.search
+package shvyn22.animesearch.presentation.search
 
 import android.content.Context
 import androidx.activity.result.ActivityResultRegistry
@@ -15,7 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import shvyn22.animesearch.R
 import shvyn22.animesearch.api.FakeApiInterface
-import shvyn22.animesearch.ui.util.MainFragmentFactory
+import shvyn22.animesearch.presentation.util.MainFragmentFactory
 import shvyn22.animesearch.util.*
 import javax.inject.Inject
 

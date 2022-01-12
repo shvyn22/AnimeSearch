@@ -1,10 +1,10 @@
-package shvyn22.animesearch.ui.util
+package shvyn22.animesearch.presentation.util
 
 import androidx.activity.result.ActivityResultRegistry
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
-import shvyn22.animesearch.ui.bookmarks.BookmarksFragment
-import shvyn22.animesearch.ui.search.SearchFragment
+import shvyn22.animesearch.presentation.bookmarks.BookmarksFragment
+import shvyn22.animesearch.presentation.search.SearchFragment
 import javax.inject.Inject
 
 class MainFragmentFactory @Inject constructor(

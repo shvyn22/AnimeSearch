@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui.bookmarks
+package shvyn22.animesearch.presentation.bookmarks
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

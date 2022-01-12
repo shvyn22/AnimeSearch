@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="shvyn22.animesearch.ui.search.SearchFragment"
+        android:name="shvyn22.animesearch.presentation.search.SearchFragment"
         android:label="@string/nav_search"
         tools:layout="@layout/fragment_search">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookmarksFragment"
-        android:name="shvyn22.animesearch.ui.bookmarks.BookmarksFragment"
+        android:name="shvyn22.animesearch.presentation.bookmarks.BookmarksFragment"
         android:label="@string/nav_bookmarks"
         tools:layout="@layout/fragment_bookmarks" />
 </navigation>

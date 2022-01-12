@@ -1,4 +1,4 @@
-package shvyn22.animesearch.ui
+package shvyn22.animesearch.presentation
 
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
