@@ -1,51 +1,41 @@
 package shvyn22.animesearch.presentation.bookmarks
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 import shvyn22.animesearch.data.local.model.Bookmark
 import shvyn22.animesearch.repository.local.LocalRepository
 import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.StateEvent
+import shvyn22.animesearch.util.toLiveData
 import javax.inject.Inject
 
 class BookmarksViewModel @Inject constructor(
-    private val localRepository: LocalRepository<Bookmark>,
+	private val localRepository: LocalRepository<Bookmark>,
 ) : ViewModel() {
 
-    private val _events = Channel<StateEvent>()
-    val events = _events.receiveAsFlow()
+	private val _events = PublishSubject.create<StateEvent>()
+	val events: Observable<StateEvent> = _events.flatMap { Observable.just(it) }
 
-    fun getBookmarks() = flow {
-        localRepository.getItems().collect {
-            emit(it)
-        }
-    }
+	fun getBookmarks() = localRepository
+		.getItems()
+		.subscribeOn(Schedulers.io())
+		.toLiveData()
 
-    fun onRemoveFromBookmarks(id: Int) {
-        viewModelScope.launch {
-            localRepository.deleteItem(id)
-        }
-    }
+	fun onRemoveFromBookmarks(id: Int) {
+		localRepository.deleteItem(id)
+	}
 
-    fun onRemoveAllFromBookmarks() {
-        viewModelScope.launch {
-            localRepository.deleteItems()
-        }
-    }
+	fun onRemoveAllFromBookmarks() {
+		localRepository.deleteItems()
+	}
 
-    fun onNavigateToAnilist(id: Int) {
-        viewModelScope.launch {
-            _events.send(StateEvent.NavigateToAnilist(id))
-        }
-    }
+	fun onNavigateToAnilist(id: Int) {
+		_events.onNext(StateEvent.NavigateToAnilist(id))
+	}
 
-    fun onErrorOccurred(error: ResourceError) {
-        viewModelScope.launch {
-            _events.send(StateEvent.ShowError(error))
-        }
-    }
+	fun onErrorOccurred(error: ResourceError) {
+		_events.onNext(StateEvent.ShowError(error))
+	}
 }

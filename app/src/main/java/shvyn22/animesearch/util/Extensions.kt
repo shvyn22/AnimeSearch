@@ -6,15 +6,12 @@ import android.net.Uri
 import android.os.Environment
 import android.view.View
 import androidx.core.content.FileProvider
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.core.Observable
 import shvyn22.animesearch.AnimeApp
 import shvyn22.animesearch.BuildConfig
 import shvyn22.animesearch.R
@@ -29,17 +26,10 @@ fun RequestBuilder<Drawable>.defaultRequests(): RequestBuilder<Drawable> {
 		.error(R.drawable.ic_error)
 }
 
-fun <T> Flow<T>.collectOnLifecycle(
-	lifecycleOwner: LifecycleOwner,
-	state: Lifecycle.State = Lifecycle.State.RESUMED,
-	block: suspend (value: T) -> Unit
-) {
-	lifecycleOwner.lifecycleScope.launch {
-		lifecycleOwner.lifecycle.repeatOnLifecycle(state) {
-			collect { block(it) }
-		}
+fun <T> Observable<T>.toLiveData(): LiveData<T> =
+	MutableLiveData<T>().apply {
+		this@toLiveData.subscribe { postValue(it) }
 	}
-}
 
 fun View.showError(msg: String) {
 	Snackbar

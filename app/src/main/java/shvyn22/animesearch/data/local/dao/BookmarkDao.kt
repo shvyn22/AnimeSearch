@@ -1,21 +1,25 @@
 package shvyn22.animesearch.data.local.dao
 
-import androidx.room.*
-import kotlinx.coroutines.flow.Flow
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import shvyn22.animesearch.data.local.model.Bookmark
 
 @Dao
 interface BookmarkDao {
 
     @Query("SELECT * FROM Bookmark")
-    fun getItems(): Flow<List<Bookmark>>
+    fun getItems(): Observable<List<Bookmark>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(item: Bookmark)
+    fun insert(item: Bookmark): Completable
 
     @Query("DELETE FROM Bookmark WHERE id = :id")
-    suspend fun delete(id: Int)
+    fun delete(id: Int): Completable
 
     @Query("DELETE FROM Bookmark")
-    suspend fun deleteAll()
+    fun deleteAll(): Completable
 }

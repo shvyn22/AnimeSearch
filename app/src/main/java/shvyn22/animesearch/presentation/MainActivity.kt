@@ -13,52 +13,51 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import shvyn22.animesearch.R
 import shvyn22.animesearch.databinding.ActivityMainBinding
 import shvyn22.animesearch.presentation.util.MultiViewModelFactory
-import shvyn22.animesearch.util.collectOnLifecycle
 import shvyn22.animesearch.util.singletonComponent
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: MultiViewModelFactory
+	@Inject
+	lateinit var viewModelFactory: MultiViewModelFactory
 
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+	private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
-    private lateinit var navController: NavController
+	private lateinit var navController: NavController
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
 
-        singletonComponent.inject(this)
+		singletonComponent.inject(this)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+		val binding = ActivityMainBinding.inflate(layoutInflater)
+		setContentView(binding.root)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.findNavController()
+		val navHostFragment =
+			supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+		navController = navHostFragment.findNavController()
 
-        setupActionBarWithNavController(navController)
-    }
+		setupActionBarWithNavController(navController)
+	}
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
+	override fun onSupportNavigateUp(): Boolean {
+		return navController.navigateUp() || super.onSupportNavigateUp()
+	}
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		menuInflater.inflate(R.menu.menu_main, menu)
 
-        viewModel.nightMode.collectOnLifecycle(this) {
-            AppCompatDelegate.setDefaultNightMode(
-                if (it) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-            )
-        }
+		viewModel.nightMode.observe(this) {
+			AppCompatDelegate.setDefaultNightMode(
+				if (it) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+			)
+		}
 
-        return true
-    }
+		return true
+	}
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_mode) viewModel.onToggleModeIcon()
-        return super.onOptionsItemSelected(item)
-    }
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		if (item.itemId == R.id.action_mode) viewModel.onToggleModeIcon()
+		return super.onOptionsItemSelected(item)
+	}
 }

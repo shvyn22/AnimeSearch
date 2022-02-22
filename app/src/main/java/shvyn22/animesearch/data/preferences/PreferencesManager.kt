@@ -1,11 +1,10 @@
 package shvyn22.animesearch.data.preferences
 
-import kotlinx.coroutines.flow.Flow
-
+import io.reactivex.rxjava3.core.Observable
 
 interface PreferencesManager {
 
-    val nightMode: Flow<Boolean>
+    val nightMode: Observable<Boolean>
 
-    suspend fun editNightMode(nightMode: Boolean)
+    fun editNightMode(nightMode: Boolean)
 }

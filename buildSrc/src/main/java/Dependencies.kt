@@ -52,15 +52,7 @@ object Dependencies {
 
         const val roomRuntime = "androidx.room:room-runtime:$roomVersion"
         const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
-        const val roomKtx = "androidx.room:room-ktx:$roomVersion"
         const val roomRx = "androidx.room:room-rxjava3:$roomVersion"
-    }
-
-    object Coroutines {
-        private const val coroutinesVersion = "1.6.0"
-
-        const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
-        const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     }
 
     object RxJava {
@@ -85,11 +77,11 @@ object Dependencies {
     }
 
     object Retrofit {
-        private const val retrofitVersion = "2.8.1"
+        private const val retrofitVersion = "2.9.0"
 
         const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-        const val retrofitRx = "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+        const val retrofitRx = "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
     }
 
     object Glide {

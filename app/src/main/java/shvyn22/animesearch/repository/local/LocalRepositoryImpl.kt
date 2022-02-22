@@ -1,25 +1,40 @@
 package shvyn22.animesearch.repository.local
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.model.Bookmark
-import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.Resource
+import shvyn22.animesearch.util.ResourceError
 
 class LocalRepositoryImpl(
-    private val bookmarkDao: BookmarkDao
+	private val bookmarkDao: BookmarkDao
 ) : LocalRepository<Bookmark> {
 
-    override suspend fun getItems(): Flow<Resource<List<Bookmark>>> =
-        bookmarkDao.getItems().map { items ->
-            if (items.isEmpty()) Resource.Error(ResourceError.NoBookmarks, items)
-            else Resource.Success(items)
-        }
+	override fun getItems(): Observable<Resource<List<Bookmark>>> =
+		bookmarkDao.getItems().map { items ->
+			if (items.isEmpty()) Resource.Error(ResourceError.NoBookmarks, items)
+			else Resource.Success(items)
+		}
 
-    override suspend fun insertItem(item: Bookmark) = bookmarkDao.insert(item)
+	override fun insertItem(item: Bookmark) {
+		bookmarkDao
+			.insert(item)
+			.subscribeOn(Schedulers.io())
+			.subscribe()
+	}
 
-    override suspend fun deleteItem(id: Int) = bookmarkDao.delete(id)
+	override fun deleteItem(id: Int) {
+		bookmarkDao
+			.delete(id)
+			.subscribeOn(Schedulers.io())
+			.subscribe()
+	}
 
-    override suspend fun deleteItems() = bookmarkDao.deleteAll()
+	override fun deleteItems() {
+		bookmarkDao
+			.deleteAll()
+			.subscribeOn(Schedulers.io())
+			.subscribe()
+	}
 }

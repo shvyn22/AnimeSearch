@@ -1,9 +1,9 @@
 package shvyn22.animesearch.repository.remote
 
-import kotlinx.coroutines.flow.Flow
+import io.reactivex.rxjava3.core.Observable
 import shvyn22.animesearch.util.Resource
 
 interface RemoteRepository<T> {
 
-    suspend fun searchImage(bytes: ByteArray): Flow<Resource<List<T>>>
+    fun searchImage(bytes: ByteArray): Observable<Resource<List<T>>>
 }

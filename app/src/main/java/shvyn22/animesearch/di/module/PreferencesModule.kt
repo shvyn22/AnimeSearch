@@ -1,10 +1,9 @@
 package shvyn22.animesearch.di.module
 
 import android.app.Application
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder
+import androidx.datastore.rxjava3.RxDataStore
 import dagger.Module
 import dagger.Provides
 import shvyn22.animesearch.data.preferences.PreferencesManager
@@ -17,16 +16,12 @@ object PreferencesModule {
 
     @Singleton
     @Provides
-    fun provideDataStore(app: Application): DataStore<Preferences> =
-        PreferenceDataStoreFactory.create(
-            produceFile = {
-                app.preferencesDataStoreFile(DATASTORE_FILENAME)
-            }
-        )
+    fun provideDataStore(app: Application): RxDataStore<Preferences> =
+        RxPreferenceDataStoreBuilder(app, DATASTORE_FILENAME).build()
 
     @Singleton
     @Provides
     fun providePreferencesManager(
-        dataStore: DataStore<Preferences>
+        dataStore: RxDataStore<Preferences>
     ): PreferencesManager = PreferencesManagerImpl(dataStore)
 }

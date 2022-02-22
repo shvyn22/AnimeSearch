@@ -66,12 +66,7 @@ dependencies {
 	// Room
 	implementation(Dependencies.Room.roomRuntime)
 	kapt(Dependencies.Room.roomCompiler)
-	implementation(Dependencies.Room.roomKtx)
 	implementation(Dependencies.Room.roomRx)
-
-	// Coroutines
-	implementation(Dependencies.Coroutines.coroutinesCore)
-	implementation(Dependencies.Coroutines.coroutinesAndroid)
 
 	// RxJava
 	implementation(Dependencies.RxJava.rxJava)

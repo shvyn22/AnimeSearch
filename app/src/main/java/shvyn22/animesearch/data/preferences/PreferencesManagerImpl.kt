@@ -1,26 +1,28 @@
 package shvyn22.animesearch.data.preferences
 
-import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.flow.map
+import androidx.datastore.rxjava3.RxDataStore
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 class PreferencesManagerImpl(
-    private val dataStore: DataStore<Preferences>
+	private val dataStore: RxDataStore<Preferences>
 ) : PreferencesManager {
 
-    override val nightMode = dataStore.data.map {
-        it[PreferencesKeys.NIGHT_MODE] ?: false
-    }
+	override val nightMode: Observable<Boolean> = dataStore.data().map {
+		it[PreferencesKeys.NIGHT_MODE] ?: false
+	}.toObservable()
 
-    override suspend fun editNightMode(nightMode: Boolean) {
-        dataStore.edit {
-            it[PreferencesKeys.NIGHT_MODE] = nightMode
-        }
-    }
+	override fun editNightMode(nightMode: Boolean) {
+		dataStore.updateDataAsync {
+			val mutablePrefs = it.toMutablePreferences()
+			mutablePrefs[PreferencesKeys.NIGHT_MODE] = nightMode
+			Single.just(mutablePrefs)
+		}
+	}
 
-    private object PreferencesKeys {
-        val NIGHT_MODE = booleanPreferencesKey("nightMode")
-    }
+	private object PreferencesKeys {
+		val NIGHT_MODE = booleanPreferencesKey("nightMode")
+	}
 }

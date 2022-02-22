@@ -1,15 +1,15 @@
 package shvyn22.animesearch.repository.local
 
-import kotlinx.coroutines.flow.Flow
+import io.reactivex.rxjava3.core.Observable
 import shvyn22.animesearch.util.Resource
 
 interface LocalRepository<T> {
 
-    suspend fun getItems(): Flow<Resource<List<T>>>
+    fun getItems(): Observable<Resource<List<T>>>
 
-    suspend fun insertItem(item: T)
+    fun insertItem(item: T)
 
-    suspend fun deleteItem(id: Int)
+    fun deleteItem(id: Int)
 
-    suspend fun deleteItems()
+    fun deleteItems()
 }

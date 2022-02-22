@@ -1,5 +1,6 @@
 package shvyn22.animesearch.api
 
+import io.reactivex.rxjava3.core.Observable
 import okhttp3.MultipartBody
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -10,7 +11,7 @@ interface ApiInterface {
 
     @Multipart
     @POST("search?anilistInfo")
-    suspend fun searchImage(
+    fun searchImage(
         @Part image: MultipartBody.Part
-    ): ApiResponse<AnimeDTO>
+    ): Observable<ApiResponse<AnimeDTO>>
 }
