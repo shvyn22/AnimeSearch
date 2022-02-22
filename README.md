@@ -22,7 +22,9 @@ This application is based on [trace.moe API](https://soruly.github.io/trace.moe-
 ## Tech stack and concepts
 * **[Kotlin](https://kotlinlang.org/)** as programming language.
 * **[Kotlin coroutines](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/)** as framework for asynchronous jobs.
-  * **Flow** (*StateFlow*) as dataholder for UI layer.  
+  * **[RxJava](https://github.com/ReactiveX/RxJava)** as its alternative (**/Dagger2+RxJava** branch).
+  * **Flow** (*StateFlow*) as dataholder for UI layer. 
+    * **Livedata** as its alternative (**/Dagger2+RxJava** branch). 
 * Single activity support.
   * **[Fragments](https://developer.android.com/jetpack/androidx/releases/fragment)**.
   * **[Navigation components](https://developer.android.com/jetpack/androidx/releases/navigation)**.
@@ -46,6 +48,7 @@ This application is based on [trace.moe API](https://soruly.github.io/trace.moe-
   * Specific testing artifacts for other libraries.
   * **Compose testing libraries**.
 * **[Hilt](https://dagger.dev/hilt/)** for dependency injection.
+  * **[Dagger 2](https://dagger.dev/)** as its alternative (**/Dagger2+RxJava** branch).
 
 ## Architecture
 The application is divided into 3 layers:
