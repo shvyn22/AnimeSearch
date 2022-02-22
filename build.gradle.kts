@@ -7,7 +7,6 @@ buildscript {
         classpath(Dependencies.Gradle.gradle)
         classpath(Dependencies.Kotlin.kotlinGradlePlugin)
         classpath(Dependencies.Navigation.navigationSafeArgs)
-        classpath(Dependencies.Hilt.hiltGradlePlugin)
     }
 }
 

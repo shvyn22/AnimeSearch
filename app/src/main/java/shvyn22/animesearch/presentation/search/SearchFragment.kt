@@ -1,5 +1,6 @@
 package shvyn22.animesearch.presentation.search
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -14,22 +15,30 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import dagger.hilt.android.AndroidEntryPoint
 import shvyn22.animesearch.R
 import shvyn22.animesearch.databinding.FragmentSearchBinding
+import shvyn22.animesearch.presentation.util.MultiViewModelFactory
 import shvyn22.animesearch.util.*
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class SearchFragment(
     private val registry: ActivityResultRegistry
 ) : Fragment(R.layout.fragment_search) {
 
-    private val viewModel: SearchViewModel by viewModels()
+    @Inject
+    lateinit var viewModelFactory: MultiViewModelFactory
+
+    private val viewModel: SearchViewModel by viewModels { viewModelFactory }
 
     private val requestPermission = registerForActivityResult(RequestPermission()) {
         if (!it) viewModel.onErrorOccurred(
             ResourceError.Specified(getString(R.string.text_error_permission))
         )
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.singletonComponent.inject(this)
     }
 
     private fun initUI(

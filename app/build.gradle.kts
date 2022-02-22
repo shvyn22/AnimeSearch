@@ -1,114 +1,95 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-parcelize")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs.kotlin")
+	id("com.android.application")
+	id("kotlin-android")
+	id("kotlin-parcelize")
+	id("kotlin-kapt")
+	id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
-    compileSdk = Config.compileSdk
+	compileSdk = Config.compileSdk
 
-    defaultConfig {
-        applicationId = Config.applicationId
-        minSdk = Config.minSdk
-        targetSdk = Config.targetSdk
-        versionCode = Config.versionCode
-        versionName = Config.versionName
+	defaultConfig {
+		applicationId = Config.applicationId
+		minSdk = Config.minSdk
+		targetSdk = Config.targetSdk
+		versionCode = Config.versionCode
+		versionName = Config.versionName
+	}
 
-        testInstrumentationRunner = Config.testInstrumentationRunner
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro")
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        viewBinding = true
-    }
-    sourceSets {
-        get("androidTest").java.srcDirs("src/androidTest/java", "src/sharedTest/java")
-        get("test").java.srcDirs("src/test/java", "src/sharedTest/java")
-    }
+	buildTypes {
+		release {
+			isMinifyEnabled = false
+			proguardFiles(
+				getDefaultProguardFile("proguard-android-optimize.txt"),
+				"proguard-rules.pro"
+			)
+		}
+	}
+	compileOptions {
+		sourceCompatibility = JavaVersion.VERSION_1_8
+		targetCompatibility = JavaVersion.VERSION_1_8
+	}
+	kotlinOptions {
+		jvmTarget = "1.8"
+	}
+	buildFeatures {
+		viewBinding = true
+	}
 }
 
 dependencies {
 
-    // Kotlin
-    implementation(Dependencies.Kotlin.kotlinStdlib)
-    implementation(Dependencies.Kotlin.ktxCore)
+	// Kotlin
+	implementation(Dependencies.Kotlin.kotlinStdlib)
+	implementation(Dependencies.Kotlin.ktxCore)
 
-    // AppCompat
-    implementation(Dependencies.AppCompat.appCompat)
+	// AppCompat
+	implementation(Dependencies.AppCompat.appCompat)
 
-    // UI
-    implementation(Dependencies.UI.material)
-    implementation(Dependencies.UI.constraintLayout)
+	// UI
+	implementation(Dependencies.UI.material)
+	implementation(Dependencies.UI.constraintLayout)
 
-    // Tests
-    testImplementation(Dependencies.Tests.junit)
-    testImplementation(Dependencies.Tests.androidXTestCore)
-    testImplementation(Dependencies.Tests.hamcrest)
-    testImplementation(Dependencies.Tests.archTesting)
+	// Fragment
+	implementation(Dependencies.Fragment.fragment)
 
-    androidTestImplementation(Dependencies.Tests.junit)
-    androidTestImplementation(Dependencies.Tests.junitExt)
-    androidTestImplementation(Dependencies.Tests.androidXTestCore)
+	// Lifecycle
+	implementation(Dependencies.Lifecycle.lifecycleRuntime)
+	implementation(Dependencies.Lifecycle.lifecycleLiveData)
+	implementation(Dependencies.Lifecycle.lifecycleViewModel)
 
-    androidTestImplementation(Dependencies.Tests.espressoCore)
-    androidTestImplementation(Dependencies.Tests.espressoContrib)
+	// Navigation
+	implementation(Dependencies.Navigation.navigationFragment)
+	implementation(Dependencies.Navigation.navigationUi)
 
-    debugImplementation(Dependencies.Fragment.fragmentTesting)
-    androidTestImplementation(Dependencies.Navigation.navigationTesting)
-    testImplementation(Dependencies.Coroutines.coroutinesTesting)
-    androidTestImplementation(Dependencies.Coroutines.coroutinesTesting)
-    androidTestImplementation(Dependencies.Hilt.hiltTesting)
-    kaptAndroidTest(Dependencies.Hilt.hiltAndroidCompiler)
+	// Room
+	implementation(Dependencies.Room.roomRuntime)
+	kapt(Dependencies.Room.roomCompiler)
+	implementation(Dependencies.Room.roomKtx)
+	implementation(Dependencies.Room.roomRx)
 
-    // Fragment
-    implementation(Dependencies.Fragment.fragment)
+	// Coroutines
+	implementation(Dependencies.Coroutines.coroutinesCore)
+	implementation(Dependencies.Coroutines.coroutinesAndroid)
 
-    // Lifecycle
-    implementation(Dependencies.Lifecycle.lifecycleRuntime)
-    implementation(Dependencies.Lifecycle.lifecycleViewModel)
+	// RxJava
+	implementation(Dependencies.RxJava.rxJava)
+	implementation(Dependencies.RxJava.rxJavaAndroid)
 
-    // Navigation
-    implementation(Dependencies.Navigation.navigationFragment)
-    implementation(Dependencies.Navigation.navigationUi)
+	// Dagger
+	implementation(Dependencies.Dagger.dagger)
+	kapt(Dependencies.Dagger.daggerCompiler)
 
-    // Room
-    implementation(Dependencies.Room.roomRuntime)
-    kapt(Dependencies.Room.roomCompiler)
-    implementation(Dependencies.Room.roomKtx)
+	// DataStore
+	implementation(Dependencies.DataStore.preferencesDataStore)
+	implementation(Dependencies.DataStore.preferencesDataStoreRx)
 
-    // Coroutines
-    implementation(Dependencies.Coroutines.coroutinesCore)
-    implementation(Dependencies.Coroutines.coroutinesAndroid)
+	// Retrofit
+	implementation(Dependencies.Retrofit.retrofit)
+	implementation(Dependencies.Retrofit.gsonConverter)
+	implementation(Dependencies.Retrofit.retrofitRx)
 
-    // Dagger Hilt
-    implementation(Dependencies.Hilt.hiltAndroid)
-    implementation(Dependencies.Hilt.hiltViewModel)
-    kapt(Dependencies.Hilt.hiltCompiler)
-    kapt(Dependencies.Hilt.hiltAndroidCompiler)
-
-    // DataStore
-    implementation(Dependencies.DataStore.preferencesDataStore)
-
-    // Retrofit
-    implementation(Dependencies.Retrofit.retrofit)
-    implementation(Dependencies.Retrofit.gsonConverter)
-
-    // Glide
-    implementation(Dependencies.Glide.glide)
+	// Glide
+	implementation(Dependencies.Glide.glide)
 }

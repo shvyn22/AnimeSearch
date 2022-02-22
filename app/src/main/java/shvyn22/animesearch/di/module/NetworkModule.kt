@@ -1,9 +1,7 @@
-package shvyn22.animesearch.di
+package shvyn22.animesearch.di.module
 
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import shvyn22.animesearch.api.ApiInterface
@@ -11,7 +9,6 @@ import shvyn22.animesearch.util.BASE_URL
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Singleton

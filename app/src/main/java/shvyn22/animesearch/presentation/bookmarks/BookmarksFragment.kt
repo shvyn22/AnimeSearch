@@ -1,5 +1,6 @@
 package shvyn22.animesearch.presentation.bookmarks
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,15 +11,23 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import dagger.hilt.android.AndroidEntryPoint
 import shvyn22.animesearch.R
 import shvyn22.animesearch.databinding.FragmentBookmarksBinding
+import shvyn22.animesearch.presentation.util.MultiViewModelFactory
 import shvyn22.animesearch.util.*
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
 
-    private val viewModel: BookmarksViewModel by viewModels()
+    @Inject
+    lateinit var viewModelFactory: MultiViewModelFactory
+
+    private val viewModel: BookmarksViewModel by viewModels { viewModelFactory }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.singletonComponent.inject(this)
+    }
 
     private fun initUI(
         binding: FragmentBookmarksBinding,

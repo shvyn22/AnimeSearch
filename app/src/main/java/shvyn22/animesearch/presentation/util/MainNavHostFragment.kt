@@ -2,10 +2,9 @@ package shvyn22.animesearch.presentation.util
 
 import android.content.Context
 import androidx.navigation.fragment.NavHostFragment
-import dagger.hilt.android.AndroidEntryPoint
+import shvyn22.animesearch.util.singletonComponent
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class MainNavHostFragment: NavHostFragment() {
 
     @Inject
@@ -13,6 +12,10 @@ class MainNavHostFragment: NavHostFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        context
+            .singletonComponent
+            .searchComponent().create(context)
+            .inject(this)
         childFragmentManager.fragmentFactory = fragmentFactory
     }
 }

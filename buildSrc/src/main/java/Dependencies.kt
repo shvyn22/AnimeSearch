@@ -24,35 +24,17 @@ object Dependencies {
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     }
 
-    object Tests {
-        private const val junitVersion = "4.13.2"
-        private const val junitExtVersion = "1.1.3"
-        private const val androidXTestCoreVersion = "1.4.0"
-        private const val hamcrestVersion = "1.3"
-        private const val archTestingVersion = "2.1.0"
-        private const val espressoVersion = "3.4.0"
-
-        const val junit = "junit:junit:$junitVersion"
-        const val junitExt = "androidx.test.ext:junit:$junitExtVersion"
-        const val androidXTestCore = "androidx.test:core-ktx:$androidXTestCoreVersion"
-        const val hamcrest = "org.hamcrest:hamcrest-all:$hamcrestVersion"
-        const val archTesting = "androidx.arch.core:core-testing:$archTestingVersion"
-
-        const val espressoCore = "androidx.test.espresso:espresso-core:$espressoVersion"
-        const val espressoContrib = "androidx.test.espresso:espresso-contrib:$espressoVersion"
-    }
-
     object Fragment {
         private const val fragmentVersion = "1.4.0"
 
         const val fragment = "androidx.fragment:fragment-ktx:$fragmentVersion"
-        const val fragmentTesting = "androidx.fragment:fragment-testing:$fragmentVersion"
     }
 
     object Lifecycle {
         private const val lifecycleVersion = "2.4.0"
 
         const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+        const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
         const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     }
 
@@ -61,7 +43,6 @@ object Dependencies {
 
         const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
         const val navigationUi = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-        const val navigationTesting = "androidx.navigation:navigation-testing:$navigationVersion"
 
         const val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
     }
@@ -72,6 +53,7 @@ object Dependencies {
         const val roomRuntime = "androidx.room:room-runtime:$roomVersion"
         const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
         const val roomKtx = "androidx.room:room-ktx:$roomVersion"
+        const val roomRx = "androidx.room:room-rxjava3:$roomVersion"
     }
 
     object Coroutines {
@@ -79,26 +61,27 @@ object Dependencies {
 
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-        const val coroutinesTesting = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
     }
 
-    object Hilt {
-        private const val hiltVersion = "2.37"
-        private const val hiltAndroidXVersion = "1.0.0-alpha03"
+    object RxJava {
+        private const val rxJavaVersion = "3.0.0"
 
-        const val hiltAndroid = "com.google.dagger:hilt-android:$hiltVersion"
-        const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
-        const val hiltAndroidCompiler = "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
-        const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
-        const val hiltTesting = "com.google.dagger:hilt-android-testing:$hiltVersion"
+        const val rxJava = "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
+        const val rxJavaAndroid = "io.reactivex.rxjava3:rxandroid:$rxJavaVersion"
+    }
 
-        const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+    object Dagger {
+        private const val daggerVersion = "2.40.5"
+
+        const val dagger = "com.google.dagger:dagger:$daggerVersion"
+        const val daggerCompiler = "com.google.dagger:dagger-compiler:$daggerVersion"
     }
 
     object DataStore {
         private const val dataStoreVersion = "1.0.0"
 
         const val preferencesDataStore = "androidx.datastore:datastore-preferences:$dataStoreVersion"
+        const val preferencesDataStoreRx = "androidx.datastore:datastore-preferences-rxjava3:$dataStoreVersion"
     }
 
     object Retrofit {
@@ -106,6 +89,7 @@ object Dependencies {
 
         const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+        const val retrofitRx = "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     }
 
     object Glide {

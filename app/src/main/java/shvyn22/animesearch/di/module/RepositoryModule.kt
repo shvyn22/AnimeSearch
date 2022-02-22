@@ -1,9 +1,7 @@
-package shvyn22.animesearch.di
+package shvyn22.animesearch.di.module
 
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import shvyn22.animesearch.api.ApiInterface
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.model.AnimeModel
@@ -15,7 +13,6 @@ import shvyn22.animesearch.repository.remote.RemoteRepositoryImpl
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
     @Singleton

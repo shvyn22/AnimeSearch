@@ -1,29 +1,35 @@
 package shvyn22.animesearch.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import dagger.hilt.android.AndroidEntryPoint
 import shvyn22.animesearch.R
 import shvyn22.animesearch.databinding.ActivityMainBinding
+import shvyn22.animesearch.presentation.util.MultiViewModelFactory
 import shvyn22.animesearch.util.collectOnLifecycle
+import shvyn22.animesearch.util.singletonComponent
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    @Inject
+    lateinit var viewModelFactory: MultiViewModelFactory
+
+    private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        singletonComponent.inject(this)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
