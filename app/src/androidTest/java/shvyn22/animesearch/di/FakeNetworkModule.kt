@@ -4,7 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
-import shvyn22.animesearch.api.FakeApiInterface
+import shvyn22.animesearch.data.remote.api.ApiService
+import shvyn22.animesearch.data.remote.api.FakeApiService
 import javax.inject.Singleton
 
 @Module
@@ -16,5 +17,5 @@ object FakeNetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiInterface(): FakeApiInterface = FakeApiInterface()
+    fun provideApiService(): ApiService = FakeApiService()
 }

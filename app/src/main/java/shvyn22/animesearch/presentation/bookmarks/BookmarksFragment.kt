@@ -20,6 +20,20 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
 
     private val viewModel: BookmarksViewModel by viewModels()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val binding = FragmentBookmarksBinding.bind(view)
+        val adapter = BookmarksAdapter(
+            onNavigateToAnilist = viewModel::onNavigateToAnilist
+        )
+
+        initUI(binding, adapter)
+        subscribeObservers(binding, adapter)
+
+        setHasOptionsMenu(true)
+    }
+
     private fun initUI(
         binding: FragmentBookmarksBinding,
         adapter: BookmarksAdapter
@@ -42,7 +56,7 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
                             viewHolder: RecyclerView.ViewHolder,
                             direction: Int
                         ) {
-                            viewModel.onRemoveFromBookmarks(
+                            viewModel.deleteBookmark(
                                 adapter.currentList[viewHolder.adapterPosition].id
                             )
                         }
@@ -52,7 +66,7 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
         }
     }
 
-    private fun subscribeToObservers(
+    private fun subscribeObservers(
         binding: FragmentBookmarksBinding,
         adapter: BookmarksAdapter,
     ) {
@@ -90,23 +104,9 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val binding = FragmentBookmarksBinding.bind(view)
-        val adapter = BookmarksAdapter(
-            onNavigateToAnilist = viewModel::onNavigateToAnilist
-        )
-
-        initUI(binding, adapter)
-        subscribeToObservers(binding, adapter)
-
-        setHasOptionsMenu(true)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_delete)
-            viewModel.onRemoveAllFromBookmarks()
+            viewModel.deleteBookmarks()
         return super.onOptionsItemSelected(item)
     }
 }

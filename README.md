@@ -5,18 +5,18 @@ This application is based on [trace.moe API](https://soruly.github.io/trace.moe-
 ## Screenshots
 ### XML view system (Material 3 widgets)
 <p float="left">
-  <img src="images/screen1.png" width=200/>
-  <img src="images/screen2.png" width=200/> 
-  <img src="images/screen3.png" width=200/>
-  <img src="images/screen4.png" width=200/>
+  <img src="assets/screen1.png" width=200/>
+  <img src="assets/screen2.png" width=200/> 
+  <img src="assets/screen3.png" width=200/>
+  <img src="assets/screen4.png" width=200/>
 </p>
 
 ### Jetpack Compose (Material 2 widgets)
 <p float="left">
-  <img src="images/screen1_compose.png" width=200/>
-  <img src="images/screen2_compose.png" width=200/> 
-  <img src="images/screen3_compose.png" width=200/>
-  <img src="images/screen4_compose.png" width=200/>
+  <img src="assets/screen1_compose.png" width=200/>
+  <img src="assets/screen2_compose.png" width=200/> 
+  <img src="assets/screen3_compose.png" width=200/>
+  <img src="assets/screen4_compose.png" width=200/>
 </p>
 
 ## Tech stack and concepts
@@ -34,8 +34,7 @@ This application is based on [trace.moe API](https://soruly.github.io/trace.moe-
   * **ViewBinding** for binding .xml views to objects in Activities and Fragments
 * Api-based remote data layer.
   * **[Retrofit](https://square.github.io/retrofit/)** for network queries.
-  * **[GSON](https://github.com/google/gson)** for parsing JSON.\
-  NOTE: considering switch to **Moshi**.
+  * **[GSON](https://github.com/google/gson)** for parsing JSON.
 * **[DataStore](https://developer.android.com/jetpack/androidx/releases/datastore)** for working with user preferences (e.g. light/dark mode)
 * **[Room](https://developer.android.com/jetpack/androidx/releases/room)** for local data layer.
 * **[Lifecycle components](https://developer.android.com/jetpack/androidx/releases/lifecycle)**.
@@ -59,7 +58,7 @@ The application is divided into 3 layers:
 For dependency flow there is .di package with corresponding modules. 
 
 ## Project structure
-<img src="images/project_structure.jpg" width=750/>
+<img src="assets/project_structure.jpg" width=750/>
 
 ## License
 ```

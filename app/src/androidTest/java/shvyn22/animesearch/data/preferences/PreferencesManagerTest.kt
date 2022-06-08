@@ -40,10 +40,8 @@ class PreferencesManagerTest {
 
     @Test
     fun editInitialMode_ReturnsModeNightYes() = runTest {
-
-        preferencesManager.editNightMode(true)
-
-        val nightMode = preferencesManager.nightMode.first()
+        preferencesManager.editThemePreferences(true)
+        val nightMode = preferencesManager.isDarkTheme.first()
 
         assertThat(
             nightMode,
@@ -53,17 +51,16 @@ class PreferencesManagerTest {
 
     @Test
     fun toggleModes_ReturnsValidMode() = runTest {
-        preferencesManager.editNightMode(false)
-        val initialMode = preferencesManager.nightMode.first()
+        preferencesManager.editThemePreferences(false)
+        val initialMode = preferencesManager.isDarkTheme.first()
 
         assertThat(
             initialMode,
             `is`(false)
         )
 
-        preferencesManager.editNightMode(true)
-
-        val afterChangeMode = preferencesManager.nightMode.first()
+        preferencesManager.editThemePreferences(true)
+        val afterChangeMode = preferencesManager.isDarkTheme.first()
 
         assertThat(
             afterChangeMode,

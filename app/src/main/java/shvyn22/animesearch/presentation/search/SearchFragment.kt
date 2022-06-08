@@ -32,6 +32,40 @@ class SearchFragment(
         )
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val binding = FragmentSearchBinding.bind(view)
+        val cameraUri = requireContext().createTempUri()
+
+        val imagePicker = ImagePicker(
+            registry = registry,
+            lifecycleOwner = this,
+            cameraUri = cameraUri,
+            processResult = this::processGettingImageResult
+        )
+
+        val adapter = SearchAdapter(
+            onNavigateToAnilist = viewModel::onNavigateToAnilist,
+            onAddToBookmarks = viewModel::insertBookmark,
+            onRemoveFromBookmarks = viewModel::deleteBookmark
+        )
+
+        initUI(binding, imagePicker, adapter)
+        subscribeObservers(binding, adapter)
+
+        setHasOptionsMenu(true)
+    }
+
+    private fun processGettingImageResult(uri: Uri?) {
+        if (uri == null)
+            viewModel.onErrorOccurred(
+                ResourceError.Specified(getString(R.string.text_error_loading))
+            )
+        else
+            viewModel.updateSelectedImage(uri.toString())
+    }
+
     private fun initUI(
         binding: FragmentSearchBinding,
         imagePicker: ImagePicker,
@@ -49,9 +83,11 @@ class SearchFragment(
             }
 
             btnFromCamera.setOnClickListener {
-                if (requireActivity().checkSelfPermission(
-                        android.Manifest.permission.CAMERA
-                    ) == PackageManager.PERMISSION_GRANTED
+                if (
+                    requireActivity()
+                        .checkSelfPermission(
+                            android.Manifest.permission.CAMERA
+                        ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     imagePicker.pickImageFromCamera()
                 } else {
@@ -70,7 +106,7 @@ class SearchFragment(
         }
     }
 
-    private fun subscribeToObservers(
+    private fun subscribeObservers(
         binding: FragmentSearchBinding,
         adapter: SearchAdapter,
     ) {
@@ -113,40 +149,6 @@ class SearchFragment(
                 }
             }
         }
-    }
-
-    private fun processGettingImageResult(uri: Uri?) {
-        if (uri == null)
-            viewModel.onErrorOccurred(
-                ResourceError.Specified(getString(R.string.text_error_loading))
-            )
-        else
-            viewModel.updateSelectedImage(uri.toString())
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val binding = FragmentSearchBinding.bind(view)
-        val cameraUri = requireContext().createTempUri()
-
-        val imagePicker = ImagePicker(
-            registry = registry,
-            lifecycleOwner = this,
-            cameraUri = cameraUri,
-            processResult = this::processGettingImageResult
-        )
-
-        val adapter = SearchAdapter(
-            onNavigateToAnilist = viewModel::onNavigateToAnilist,
-            onAddToBookmarks = viewModel::onAddToBookmarks,
-            onRemoveFromBookmarks = viewModel::onRemoveFromBookmarks
-        )
-
-        initUI(binding, imagePicker, adapter)
-        subscribeToObservers(binding, adapter)
-
-        setHasOptionsMenu(true)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

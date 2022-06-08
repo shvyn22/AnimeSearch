@@ -45,15 +45,15 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onAddToBookmarks(item: AnimeModel) {
+    fun insertBookmark(item: AnimeModel) {
         viewModelScope.launch {
-            localRepository.insertItem(fromAnimeModelToBookmark(item))
+            localRepository.insertBookmark(fromAnimeModelToBookmark(item))
         }
     }
 
-    fun onRemoveFromBookmarks(id: Int) {
+    fun deleteBookmark(id: Int) {
         viewModelScope.launch {
-            localRepository.deleteItem(id)
+            localRepository.deleteBookmark(id)
         }
     }
 

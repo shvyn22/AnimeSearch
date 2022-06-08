@@ -5,17 +5,18 @@ import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import shvyn22.animesearch.api.FakeApiInterface
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.dao.FakeBookmarkDao
 import shvyn22.animesearch.data.local.model.AnimeModel
+import shvyn22.animesearch.data.remote.api.ApiService
+import shvyn22.animesearch.data.remote.api.FakeApiService
 import shvyn22.animesearch.data.util.fromAnimeDTOToModel
 import shvyn22.animesearch.repository.remote.RemoteRepository
-import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.Resource
+import shvyn22.animesearch.util.ResourceError
 
 class FakeRemoteRepository(
-    private val api: FakeApiInterface = FakeApiInterface(),
+    private val api: ApiService = FakeApiService(),
     private val bookmarkDao: BookmarkDao = FakeBookmarkDao(),
 ) : RemoteRepository<AnimeModel> {
 
@@ -33,7 +34,7 @@ class FakeRemoteRepository(
         )
 
         if (response.error.isEmpty())
-            bookmarkDao.getItems().collect { bookmarks ->
+            bookmarkDao.getBookmarks().collect { bookmarks ->
                 emit(
                     Resource.Success(
                         fromAnimeDTOToModel(response.result)

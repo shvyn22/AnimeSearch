@@ -1,10 +1,10 @@
 package shvyn22.animesearch.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,7 +19,6 @@ import shvyn22.animesearch.util.collectOnLifecycle
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
-
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +41,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
-        viewModel.nightMode.collectOnLifecycle(this) {
+        viewModel.isDarkTheme.collectOnLifecycle(this) { isDarkTheme ->
             AppCompatDelegate.setDefaultNightMode(
-                if (it) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                if (isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES
+                else AppCompatDelegate.MODE_NIGHT_NO
             )
         }
 
@@ -52,7 +52,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_mode) viewModel.onToggleModeIcon()
+        if (item.itemId == R.id.action_mode)
+            viewModel.editThemePreferences(
+                AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO
+            )
         return super.onOptionsItemSelected(item)
     }
 }

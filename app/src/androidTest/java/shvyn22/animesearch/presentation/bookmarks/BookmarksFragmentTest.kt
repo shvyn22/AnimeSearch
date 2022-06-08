@@ -41,8 +41,8 @@ class BookmarksFragmentTest {
     @Test
     fun populateDaoWith2Items_2ItemsAreInView() {
         runTest {
-            bookmarkDao.insert(bookmark1)
-            bookmarkDao.insert(bookmark2)
+            bookmarkDao.insertBookmark(bookmark1)
+            bookmarkDao.insertBookmark(bookmark2)
         }
 
         onView(withId(R.id.rv_bookmarks))
@@ -59,7 +59,7 @@ class BookmarksFragmentTest {
     @Test
     fun populateDaoWith1Item_1ItemIsInView() {
         runTest {
-            bookmarkDao.insert(bookmark1)
+            bookmarkDao.insertBookmark(bookmark1)
         }
 
         onView(withId(R.id.rv_bookmarks))
@@ -80,8 +80,8 @@ class BookmarksFragmentTest {
     @Test
     fun populateDaoWith2Items_Swipe1Item_1ItemIsInView() {
         runTest {
-            bookmarkDao.insert(bookmark1)
-            bookmarkDao.insert(bookmark2)
+            bookmarkDao.insertBookmark(bookmark1)
+            bookmarkDao.insertBookmark(bookmark2)
         }
 
         onView(withId(R.id.rv_bookmarks))
@@ -102,8 +102,8 @@ class BookmarksFragmentTest {
     @Test
     fun populateDaoWith2Items_RemoveAllItems_NoItemsAreInView() {
         runTest {
-            bookmarkDao.insert(bookmark1)
-            bookmarkDao.insert(bookmark2)
+            bookmarkDao.insertBookmark(bookmark1)
+            bookmarkDao.insertBookmark(bookmark2)
         }
 
         onView(withId(R.id.action_delete))

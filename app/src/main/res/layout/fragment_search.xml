@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".presentation.search.SearchFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,5 +123,5 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:indeterminateTintMode="src_atop"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </FrameLayout>

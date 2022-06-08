@@ -14,6 +14,7 @@ import dagger.hilt.android.qualifiers.ActivityContext
 object ActivityModule {
 
     @Provides
-    fun provideRegistry(@ActivityContext activity: Context): ActivityResultRegistry =
-        (activity as AppCompatActivity).activityResultRegistry
+    fun provideRegistry(
+        @ActivityContext activity: Context
+    ): ActivityResultRegistry = (activity as AppCompatActivity).activityResultRegistry
 }

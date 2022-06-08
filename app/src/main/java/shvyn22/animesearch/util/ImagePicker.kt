@@ -20,7 +20,6 @@ class ImagePicker(
         processResult(uri)
     }
 
-
     private val getImageFromCamera = registry.register(
         REGISTRY_KEY,
         lifecycleOwner,

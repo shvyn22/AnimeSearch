@@ -11,7 +11,7 @@ import org.hamcrest.core.Is.`is`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import shvyn22.animesearch.api.FakeApiInterface
+import shvyn22.animesearch.data.remote.api.FakeApiService
 import shvyn22.animesearch.data.local.dao.FakeBookmarkDao
 import shvyn22.animesearch.data.util.fromAnimeDTOToModel
 import shvyn22.animesearch.repository.FakeLocalRepository
@@ -27,13 +27,13 @@ class SearchViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var api: FakeApiInterface
+    private lateinit var api: FakeApiService
     private lateinit var dao: FakeBookmarkDao
     private lateinit var viewModel: SearchViewModel
 
     @Before
     fun init() {
-        api = FakeApiInterface()
+        api = FakeApiService()
         dao = FakeBookmarkDao()
         viewModel = SearchViewModel(
             FakeRemoteRepository(api, dao),
@@ -104,8 +104,8 @@ class SearchViewModelTest {
 
     @Test
     fun toggleInBookmarks_ReturnsValidState() = runTest {
-        viewModel.onAddToBookmarks(fromAnimeDTOToModel(animeDTO1))
-        var bookmarks = dao.getItems().drop(1).first()
+        viewModel.insertBookmark(fromAnimeDTOToModel(animeDTO1))
+        var bookmarks = dao.getBookmarks().drop(1).first()
 
         assertThat(
             bookmarks.size,
@@ -117,8 +117,8 @@ class SearchViewModelTest {
             `is`(animeDTO1.anilistInfo.id)
         )
 
-        viewModel.onRemoveFromBookmarks(animeDTO1.anilistInfo.id)
-        bookmarks = dao.getItems().drop(1).first()
+        viewModel.deleteBookmark(animeDTO1.anilistInfo.id)
+        bookmarks = dao.getBookmarks().drop(1).first()
 
         assertThat(
             bookmarks.size,

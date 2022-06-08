@@ -1,12 +1,12 @@
-package shvyn22.animesearch.api
+package shvyn22.animesearch.data.remote.api
 
 import okhttp3.MultipartBody
-import shvyn22.animesearch.data.remote.AnimeDTO
+import shvyn22.animesearch.data.remote.dto.AnimeDTO
 import shvyn22.animesearch.util.ERROR_FETCHING
 
-class FakeApiInterface(
+class FakeApiService(
     private var shouldFail: Boolean = false
-): ApiInterface {
+) : ApiService {
 
     fun changeFailBehaviour(shouldFail: Boolean) {
         this.shouldFail = shouldFail

@@ -22,20 +22,20 @@ class BookmarksViewModel @Inject constructor(
     val events = _events.receiveAsFlow()
 
     fun getBookmarks() = flow {
-        localRepository.getItems().collect {
+        localRepository.getBookmarks().collect {
             emit(it)
         }
     }
 
-    fun onRemoveFromBookmarks(id: Int) {
+    fun deleteBookmark(id: Int) {
         viewModelScope.launch {
-            localRepository.deleteItem(id)
+            localRepository.deleteBookmark(id)
         }
     }
 
-    fun onRemoveAllFromBookmarks() {
+    fun deleteBookmarks() {
         viewModelScope.launch {
-            localRepository.deleteItems()
+            localRepository.deleteBookmarks()
         }
     }
 

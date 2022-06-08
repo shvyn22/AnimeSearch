@@ -11,17 +11,20 @@ import shvyn22.animesearch.util.ResourceError
 
 class FakeLocalRepository(
     private val bookmarkDao: BookmarkDao = FakeBookmarkDao()
-): LocalRepository<Bookmark> {
+) : LocalRepository<Bookmark> {
 
-    override suspend fun getItems(): Flow<Resource<List<Bookmark>>> =
-        bookmarkDao.getItems().map { items ->
+    override suspend fun getBookmarks(): Flow<Resource<List<Bookmark>>> =
+        bookmarkDao.getBookmarks().map { items ->
             if (items.isEmpty()) Resource.Error(ResourceError.NoBookmarks, items)
             else Resource.Success(items)
         }
 
-    override suspend fun insertItem(item: Bookmark) = bookmarkDao.insert(item)
+    override suspend fun insertBookmark(item: Bookmark) =
+        bookmarkDao.insertBookmark(item)
 
-    override suspend fun deleteItem(id: Int) = bookmarkDao.delete(id)
+    override suspend fun deleteBookmark(id: Int) =
+        bookmarkDao.deleteBookmark(id)
 
-    override suspend fun deleteItems() = bookmarkDao.deleteAll()
+    override suspend fun deleteBookmarks() =
+        bookmarkDao.deleteBookmarks()
 }

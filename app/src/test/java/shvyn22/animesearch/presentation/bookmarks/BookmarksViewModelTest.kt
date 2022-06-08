@@ -40,8 +40,8 @@ class BookmarksViewModelTest {
 
     @Test
     fun populateDaoWith2Items_Returns2Items() = runTest {
-        dao.insert(bookmark1)
-        dao.insert(bookmark2)
+        dao.insertBookmark(bookmark1)
+        dao.insertBookmark(bookmark2)
 
         val resource = viewModel.getBookmarks().first()
         assertThat(resource, `is`(instanceOf(Resource.Success::class.java)))
@@ -60,24 +60,24 @@ class BookmarksViewModelTest {
 
     @Test
     fun populateDaoWith2Items_Remove1Item_Returns1Item() = runTest {
-        dao.insert(bookmark1)
-        dao.insert(bookmark2)
+        dao.insertBookmark(bookmark1)
+        dao.insertBookmark(bookmark2)
 
-        viewModel.onRemoveFromBookmarks(bookmark1.id)
+        viewModel.deleteBookmark(bookmark1.id)
 
-        val bookmarks = dao.getItems().drop(1).first()
+        val bookmarks = dao.getBookmarks().drop(1).first()
         assertThat(bookmarks.size, `is`(1))
         assertThat(bookmarks[0].id, `is`(bookmark2.id))
     }
 
     @Test
     fun populateDaoWith2Items_RemoveAllItems_ReturnsNoItems() = runTest {
-        dao.insert(bookmark1)
-        dao.insert(bookmark2)
+        dao.insertBookmark(bookmark1)
+        dao.insertBookmark(bookmark2)
 
-        viewModel.onRemoveAllFromBookmarks()
+        viewModel.deleteBookmarks()
 
-        val bookmarks = dao.getItems().drop(1).first()
+        val bookmarks = dao.getBookmarks().drop(1).first()
         assertThat(bookmarks.size, `is`(0))
     }
 }

@@ -1,12 +1,12 @@
-package shvyn22.animesearch.api
+package shvyn22.animesearch.data.remote.api
 
 import okhttp3.MultipartBody
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
-import shvyn22.animesearch.data.remote.AnimeDTO
+import shvyn22.animesearch.data.remote.dto.AnimeDTO
 
-interface ApiInterface {
+interface ApiService {
 
     @Multipart
     @POST("search?anilistInfo")

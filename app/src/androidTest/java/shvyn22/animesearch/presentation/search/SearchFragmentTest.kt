@@ -14,7 +14,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import shvyn22.animesearch.R
-import shvyn22.animesearch.api.FakeApiInterface
+import shvyn22.animesearch.data.remote.api.ApiService
+import shvyn22.animesearch.data.remote.api.FakeApiService
 import shvyn22.animesearch.presentation.util.MainFragmentFactory
 import shvyn22.animesearch.util.*
 import javax.inject.Inject
@@ -26,7 +27,8 @@ class SearchFragmentTest {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var api: FakeApiInterface
+    lateinit var api: ApiService
+    private val fakeApi get() = api as FakeApiService
 
     @Inject
     lateinit var registry: ActivityResultRegistry
@@ -42,7 +44,7 @@ class SearchFragmentTest {
 
     @Test
     fun remoteIsAvailable_populateApiWith2Items_2ItemsAreInView() {
-        api.initResponse(animeDTOs)
+        fakeApi.initResponse(animeDTOs)
 
         onView(withId(R.id.btn_from_file))
             .perform(click())
@@ -93,7 +95,7 @@ class SearchFragmentTest {
 
     @Test
     fun remoteIsNotAvailable_ErrorIsThrown() {
-        api.changeFailBehaviour(true)
+        fakeApi.changeFailBehaviour(true)
 
         onView(withId(R.id.btn_from_file))
             .perform(click())
