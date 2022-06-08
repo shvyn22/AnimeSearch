@@ -12,15 +12,15 @@ import shvyn22.animesearch.presentation.search.SearchViewModel
 @Module
 interface ViewModelModule {
 
-	@Binds
-	@[IntoMap ViewModelKey(MainViewModel::class)]
-	fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel
+    @Binds
+    @[IntoMap ViewModelKey(MainViewModel::class)]
+    fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel
 
-	@Binds
-	@[IntoMap ViewModelKey(SearchViewModel::class)]
-	fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+    @Binds
+    @[IntoMap ViewModelKey(SearchViewModel::class)]
+    fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 
-	@Binds
-	@[IntoMap ViewModelKey(BookmarksViewModel::class)]
-	fun bindBookmarksViewModel(bookmarksViewModel: BookmarksViewModel): ViewModel
+    @Binds
+    @[IntoMap ViewModelKey(BookmarksViewModel::class)]
+    fun bindBookmarksViewModel(bookmarksViewModel: BookmarksViewModel): ViewModel
 }

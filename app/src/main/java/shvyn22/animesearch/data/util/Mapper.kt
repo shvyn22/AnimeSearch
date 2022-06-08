@@ -2,9 +2,9 @@ package shvyn22.animesearch.data.util
 
 import shvyn22.animesearch.data.local.model.AnimeModel
 import shvyn22.animesearch.data.local.model.Bookmark
-import shvyn22.animesearch.data.remote.AnimeDTO
+import shvyn22.animesearch.data.remote.dto.AnimeDTO
 
-fun fromAnimeDTOToModel(item: AnimeDTO) : AnimeModel =
+fun fromAnimeDTOToModel(item: AnimeDTO): AnimeModel =
     AnimeModel(
         id = item.anilistInfo.id,
         title = item.anilistInfo.title.toString(),
@@ -16,10 +16,10 @@ fun fromAnimeDTOToModel(item: AnimeDTO) : AnimeModel =
         isBookmarked = false,
     )
 
-fun fromAnimeDTOToModel(items: List<AnimeDTO>) : List<AnimeModel> =
+fun fromAnimeDTOToModel(items: List<AnimeDTO>): List<AnimeModel> =
     items.map { fromAnimeDTOToModel(it) }
 
-fun fromAnimeModelToBookmark(item: AnimeModel) : Bookmark =
+fun fromAnimeModelToBookmark(item: AnimeModel): Bookmark =
     Bookmark(
         id = item.id,
         title = item.title,

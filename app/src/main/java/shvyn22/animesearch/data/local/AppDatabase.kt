@@ -9,7 +9,7 @@ import shvyn22.animesearch.data.local.model.Bookmark
     entities = [Bookmark::class],
     version = 1
 )
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun bookmarkDao() : BookmarkDao
+    abstract fun bookmarkDao(): BookmarkDao
 }

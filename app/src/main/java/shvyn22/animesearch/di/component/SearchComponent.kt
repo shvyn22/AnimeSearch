@@ -11,14 +11,14 @@ import javax.inject.Scope
 @Subcomponent(modules = [ActivityModule::class])
 interface SearchComponent {
 
-	fun inject(mainNavHostFragment: MainNavHostFragment)
+    fun inject(mainNavHostFragment: MainNavHostFragment)
 
-	@Subcomponent.Factory
-	interface Factory {
-		fun create(
-			@BindsInstance activity: Context
-		): SearchComponent
-	}
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(
+            @BindsInstance activity: Context
+        ): SearchComponent
+    }
 }
 
 @Scope

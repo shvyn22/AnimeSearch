@@ -13,18 +13,18 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class])
 interface SingletonComponent {
 
-	fun inject(mainActivity: MainActivity)
+    fun inject(mainActivity: MainActivity)
 
-	fun inject(searchFragment: SearchFragment)
+    fun inject(searchFragment: SearchFragment)
 
-	fun inject(bookmarksFragment: BookmarksFragment)
+    fun inject(bookmarksFragment: BookmarksFragment)
 
-	fun searchComponent(): SearchComponent.Factory
+    fun searchComponent(): SearchComponent.Factory
 
-	@Component.Factory
-	interface Factory {
-		fun create(
-			@BindsInstance application: Application
-		): SingletonComponent
-	}
+    @Component.Factory
+    interface Factory {
+        fun create(
+            @BindsInstance app: Application
+        ): SingletonComponent
+    }
 }

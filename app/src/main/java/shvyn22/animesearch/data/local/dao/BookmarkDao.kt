@@ -12,14 +12,14 @@ import shvyn22.animesearch.data.local.model.Bookmark
 interface BookmarkDao {
 
     @Query("SELECT * FROM Bookmark")
-    fun getItems(): Observable<List<Bookmark>>
+    fun getBookmarks(): Observable<List<Bookmark>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: Bookmark): Completable
+    fun insertBookmark(item: Bookmark): Completable
 
     @Query("DELETE FROM Bookmark WHERE id = :id")
-    fun delete(id: Int): Completable
+    fun deleteBookmark(id: Int): Completable
 
     @Query("DELETE FROM Bookmark")
-    fun deleteAll(): Completable
+    fun deleteBookmarks(): Completable
 }

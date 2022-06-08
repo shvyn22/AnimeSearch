@@ -8,33 +8,35 @@ import shvyn22.animesearch.util.Resource
 import shvyn22.animesearch.util.ResourceError
 
 class LocalRepositoryImpl(
-	private val bookmarkDao: BookmarkDao
+    private val dao: BookmarkDao
 ) : LocalRepository<Bookmark> {
 
-	override fun getItems(): Observable<Resource<List<Bookmark>>> =
-		bookmarkDao.getItems().map { items ->
-			if (items.isEmpty()) Resource.Error(ResourceError.NoBookmarks, items)
-			else Resource.Success(items)
-		}
+    override fun getBookmarks(): Observable<Resource<List<Bookmark>>> =
+        dao.getBookmarks().map { items ->
+            if (items.isEmpty())
+                Resource.Error(ResourceError.NoBookmarks, items)
+            else
+                Resource.Success(items)
+        }
 
-	override fun insertItem(item: Bookmark) {
-		bookmarkDao
-			.insert(item)
-			.subscribeOn(Schedulers.io())
-			.subscribe()
-	}
+    override fun insertBookmark(item: Bookmark) {
+        dao
+            .insertBookmark(item)
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
 
-	override fun deleteItem(id: Int) {
-		bookmarkDao
-			.delete(id)
-			.subscribeOn(Schedulers.io())
-			.subscribe()
-	}
+    override fun deleteBookmark(id: Int) {
+        dao
+            .deleteBookmark(id)
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
 
-	override fun deleteItems() {
-		bookmarkDao
-			.deleteAll()
-			.subscribeOn(Schedulers.io())
-			.subscribe()
-	}
+    override fun deleteBookmarks() {
+        dao
+            .deleteBookmarks()
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
 }

@@ -12,30 +12,30 @@ import shvyn22.animesearch.util.toLiveData
 import javax.inject.Inject
 
 class BookmarksViewModel @Inject constructor(
-	private val localRepository: LocalRepository<Bookmark>,
+    private val localRepository: LocalRepository<Bookmark>,
 ) : ViewModel() {
 
-	private val _events = PublishSubject.create<StateEvent>()
-	val events: Observable<StateEvent> = _events.flatMap { Observable.just(it) }
+    private val _events = PublishSubject.create<StateEvent>()
+    val events: Observable<StateEvent> = _events.flatMap { Observable.just(it) }
 
-	fun getBookmarks() = localRepository
-		.getItems()
-		.subscribeOn(Schedulers.io())
-		.toLiveData()
+    fun getBookmarks() = localRepository
+        .getBookmarks()
+        .subscribeOn(Schedulers.io())
+        .toLiveData()
 
-	fun onRemoveFromBookmarks(id: Int) {
-		localRepository.deleteItem(id)
-	}
+    fun deleteBookmark(id: Int) {
+        localRepository.deleteBookmark(id)
+    }
 
-	fun onRemoveAllFromBookmarks() {
-		localRepository.deleteItems()
-	}
+    fun deleteBookmarks() {
+        localRepository.deleteBookmarks()
+    }
 
-	fun onNavigateToAnilist(id: Int) {
-		_events.onNext(StateEvent.NavigateToAnilist(id))
-	}
+    fun onNavigateToAnilist(id: Int) {
+        _events.onNext(StateEvent.NavigateToAnilist(id))
+    }
 
-	fun onErrorOccurred(error: ResourceError) {
-		_events.onNext(StateEvent.ShowError(error))
-	}
+    fun onErrorOccurred(error: ResourceError) {
+        _events.onNext(StateEvent.ShowError(error))
+    }
 }

@@ -20,106 +20,106 @@ import javax.inject.Inject
 
 class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
 
-	@Inject
-	lateinit var viewModelFactory: MultiViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: MultiViewModelFactory
 
-	private val viewModel: BookmarksViewModel by viewModels { viewModelFactory }
+    private val viewModel: BookmarksViewModel by viewModels { viewModelFactory }
 
-	override fun onAttach(context: Context) {
-		super.onAttach(context)
-		context.singletonComponent.inject(this)
-	}
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.singletonComponent.inject(this)
+    }
 
-	private fun initUI(
-		binding: FragmentBookmarksBinding,
-		adapter: BookmarksAdapter
-	) {
-		binding.apply {
-			rvBookmarks.apply {
-				this.adapter = adapter
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-				ItemTouchHelper(
-					object : ItemTouchHelper.SimpleCallback(
-						0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-					) {
-						override fun onMove(
-							recyclerView: RecyclerView,
-							viewHolder: RecyclerView.ViewHolder,
-							target: RecyclerView.ViewHolder
-						) = false
+        val binding = FragmentBookmarksBinding.bind(view)
+        val adapter = BookmarksAdapter(
+            onNavigateToAnilist = viewModel::onNavigateToAnilist
+        )
 
-						override fun onSwiped(
-							viewHolder: RecyclerView.ViewHolder,
-							direction: Int
-						) {
-							viewModel.onRemoveFromBookmarks(
-								adapter.currentList[viewHolder.adapterPosition].id
-							)
-						}
-					}
-				).attachToRecyclerView(this)
-			}
-		}
-	}
+        initUI(binding, adapter)
+        subscribeObservers(binding, adapter)
 
-	private fun subscribeToObservers(
-		binding: FragmentBookmarksBinding,
-		adapter: BookmarksAdapter,
-	) {
-		binding.apply {
-			viewModel.getBookmarks().observe(viewLifecycleOwner) { resource ->
-				pbLoading.isVisible = resource is Resource.Loading
+        setHasOptionsMenu(true)
+    }
 
-				if (resource is Resource.Success)
-					adapter.submitList(resource.data)
-				else if (resource is Resource.Error) {
-					resource.data?.let { adapter.submitList(it) }
-					viewModel.onErrorOccurred(resource.error)
-				}
-			}
+    private fun initUI(
+        binding: FragmentBookmarksBinding,
+        adapter: BookmarksAdapter
+    ) {
+        binding.apply {
+            rvBookmarks.apply {
+                this.adapter = adapter
 
-			viewModel.events
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe {
-					when (it) {
-						is StateEvent.NavigateToAnilist -> {
-							val intent = Intent(
-								Intent.ACTION_VIEW,
-								Uri.parse(ANILIST_URL + it.id)
-							)
-							startActivity(intent)
-						}
-						is StateEvent.ShowError ->
-							when (it.error) {
-								is ResourceError.Fetching -> root.showError(getString(R.string.text_error_fetching))
-								is ResourceError.Specified -> root.showError(it.error.msg)
-								is ResourceError.NoBookmarks -> {
-									tvBookmarksHint.text =
-										getString(R.string.text_error_no_bookmarks)
-								}
-							}
-					}
-				}
-		}
-	}
+                ItemTouchHelper(
+                    object : ItemTouchHelper.SimpleCallback(
+                        0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                    ) {
+                        override fun onMove(
+                            recyclerView: RecyclerView,
+                            viewHolder: RecyclerView.ViewHolder,
+                            target: RecyclerView.ViewHolder
+                        ) = false
 
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
+                        override fun onSwiped(
+                            viewHolder: RecyclerView.ViewHolder,
+                            direction: Int
+                        ) {
+                            viewModel.deleteBookmark(
+                                adapter.currentList[viewHolder.adapterPosition].id
+                            )
+                        }
+                    }
+                ).attachToRecyclerView(this)
+            }
+        }
+    }
 
-		val binding = FragmentBookmarksBinding.bind(view)
-		val adapter = BookmarksAdapter(
-			onNavigateToAnilist = viewModel::onNavigateToAnilist
-		)
+    private fun subscribeObservers(
+        binding: FragmentBookmarksBinding,
+        adapter: BookmarksAdapter,
+    ) {
+        binding.apply {
+            viewModel.getBookmarks().observe(viewLifecycleOwner) { resource ->
+                pbLoading.isVisible = resource is Resource.Loading
 
-		initUI(binding, adapter)
-		subscribeToObservers(binding, adapter)
+                if (resource is Resource.Success)
+                    adapter.submitList(resource.data)
+                else if (resource is Resource.Error) {
+                    resource.data?.let { adapter.submitList(it) }
+                    viewModel.onErrorOccurred(resource.error)
+                }
+            }
 
-		setHasOptionsMenu(true)
-	}
+            viewModel.events
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    when (it) {
+                        is StateEvent.NavigateToAnilist -> {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(ANILIST_URL + it.id)
+                            )
+                            startActivity(intent)
+                        }
+                        is StateEvent.ShowError ->
+                            when (it.error) {
+                                is ResourceError.Fetching -> root.showError(getString(R.string.text_error_fetching))
+                                is ResourceError.Specified -> root.showError(it.error.msg)
+                                is ResourceError.NoBookmarks -> {
+                                    tvBookmarksHint.text =
+                                        getString(R.string.text_error_no_bookmarks)
+                                }
+                            }
+                    }
+                }
+        }
+    }
 
-	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		if (item.itemId == R.id.action_delete)
-			viewModel.onRemoveAllFromBookmarks()
-		return super.onOptionsItemSelected(item)
-	}
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_delete)
+            viewModel.deleteBookmarks()
+        return super.onOptionsItemSelected(item)
+    }
 }

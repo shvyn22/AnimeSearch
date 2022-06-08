@@ -6,11 +6,11 @@ import shvyn22.animesearch.di.component.SingletonComponent
 
 class AnimeApp : Application() {
 
-	lateinit var singletonComponent: SingletonComponent
+    lateinit var singletonComponent: SingletonComponent
 
-	override fun onCreate() {
-		super.onCreate()
+    override fun onCreate() {
+        super.onCreate()
 
-		singletonComponent = DaggerSingletonComponent.factory().create(this)
-	}
+        singletonComponent = DaggerSingletonComponent.factory().create(this)
+    }
 }

@@ -2,7 +2,7 @@ package shvyn22.animesearch.di.module
 
 import dagger.Module
 import dagger.Provides
-import shvyn22.animesearch.api.ApiInterface
+import shvyn22.animesearch.data.remote.api.ApiService
 import shvyn22.animesearch.data.local.dao.BookmarkDao
 import shvyn22.animesearch.data.local.model.AnimeModel
 import shvyn22.animesearch.data.local.model.Bookmark
@@ -18,13 +18,13 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideLocalRepository(
-        bookmarkDao: BookmarkDao
-    ): LocalRepository<Bookmark> = LocalRepositoryImpl(bookmarkDao)
+        dao: BookmarkDao
+    ): LocalRepository<Bookmark> = LocalRepositoryImpl(dao)
 
     @Singleton
     @Provides
     fun provideRemoteRepository(
-        api: ApiInterface,
+        api: ApiService,
         dao: BookmarkDao
     ): RemoteRepository<AnimeModel> = RemoteRepositoryImpl(api, dao)
 }

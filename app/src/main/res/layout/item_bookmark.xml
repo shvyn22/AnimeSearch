@@ -31,10 +31,10 @@
             android:contentDescription="@string/text_accessibility_adult"
             android:src="@drawable/ic_adult"
             app:iconSize="@dimen/size_icon"
-            app:layout_constraintStart_toStartOf="@id/iv_anilist"
+            app:layout_constraintBottom_toTopOf="@id/iv_anilist"
             app:layout_constraintEnd_toEndOf="@id/iv_anilist"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/iv_anilist"/>
+            app:layout_constraintStart_toStartOf="@id/iv_anilist"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_title"

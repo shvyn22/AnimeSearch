@@ -5,11 +5,11 @@ import shvyn22.animesearch.util.Resource
 
 interface LocalRepository<T> {
 
-    fun getItems(): Observable<Resource<List<T>>>
+    fun getBookmarks(): Observable<Resource<List<T>>>
 
-    fun insertItem(item: T)
+    fun insertBookmark(item: T)
 
-    fun deleteItem(id: Int)
+    fun deleteBookmark(id: Int)
 
-    fun deleteItems()
+    fun deleteBookmarks()
 }

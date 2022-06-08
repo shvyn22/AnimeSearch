@@ -3,7 +3,6 @@ package shvyn22.animesearch.presentation.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -43,12 +42,12 @@ class SearchViewModel @Inject constructor(
             .subscribe()
     }
 
-    fun onAddToBookmarks(item: AnimeModel) {
-        localRepository.insertItem(fromAnimeModelToBookmark(item))
+    fun insertBookmark(item: AnimeModel) {
+        localRepository.insertBookmark(fromAnimeModelToBookmark(item))
     }
 
-    fun onRemoveFromBookmarks(id: Int) {
-        localRepository.deleteItem(id)
+    fun deleteBookmark(id: Int) {
+        localRepository.deleteBookmark(id)
     }
 
     fun onNavigateToAnilist(id: Int) {

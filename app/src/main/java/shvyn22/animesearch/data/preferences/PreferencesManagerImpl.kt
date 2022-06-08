@@ -7,22 +7,22 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 class PreferencesManagerImpl(
-	private val dataStore: RxDataStore<Preferences>
+    private val dataStore: RxDataStore<Preferences>
 ) : PreferencesManager {
 
-	override val nightMode: Observable<Boolean> = dataStore.data().map {
-		it[PreferencesKeys.NIGHT_MODE] ?: false
-	}.toObservable()
+    override val isDarkTheme: Observable<Boolean> = dataStore.data().map {
+        it[PreferencesKeys.DARK_THEME] ?: false
+    }.toObservable()
 
-	override fun editNightMode(nightMode: Boolean) {
-		dataStore.updateDataAsync {
-			val mutablePrefs = it.toMutablePreferences()
-			mutablePrefs[PreferencesKeys.NIGHT_MODE] = nightMode
-			Single.just(mutablePrefs)
-		}
-	}
+    override fun editThemePreferences(newThemeValue: Boolean) {
+        dataStore.updateDataAsync {
+            val mutablePrefs = it.toMutablePreferences()
+            mutablePrefs[PreferencesKeys.DARK_THEME] = newThemeValue
+            Single.just(mutablePrefs)
+        }
+    }
 
-	private object PreferencesKeys {
-		val NIGHT_MODE = booleanPreferencesKey("nightMode")
-	}
+    private object PreferencesKeys {
+        val DARK_THEME = booleanPreferencesKey("isDarkTheme")
+    }
 }
