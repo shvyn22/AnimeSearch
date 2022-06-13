@@ -1,6 +1,7 @@
 package shvyn22.animesearch.presentation.ui.components
 
 import androidx.annotation.StringRes
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -21,6 +22,7 @@ enum class Screen(
     Bookmarks("bookmarks", R.string.nav_bookmarks)
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun NavigationConfig(
     navController: NavHostController,

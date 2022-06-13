@@ -1,10 +1,8 @@
 package shvyn22.animesearch.presentation.bookmarks
 
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.CoroutineScope
@@ -105,9 +103,12 @@ class BookmarksScreenTest {
             bookmarkDao.insertBookmark(bookmark2)
         }
 
-        //TODO: implement swipe
-
         composeRule.apply {
+            onNodeWithText(activity.getString(R.string.text_title, bookmark2.title))
+                .performTouchInput {
+                    swipe(Offset.Zero, Offset(300f, 0f), 100)
+                }
+
             onNodeWithText(activity.getString(R.string.text_title, bookmark1.title))
                 .assertIsDisplayed()
 

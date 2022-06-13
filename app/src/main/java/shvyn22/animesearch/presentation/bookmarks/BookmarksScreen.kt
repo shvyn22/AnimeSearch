@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +20,7 @@ import shvyn22.animesearch.util.Resource
 import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.StateEvent
 
+@ExperimentalMaterialApi
 @Composable
 fun BookmarksScreen(
     actionsState: ActionsState,
@@ -51,6 +50,7 @@ fun BookmarksScreen(
     )
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun BookmarksContent(
     resource: Resource<List<Bookmark>>,
@@ -92,12 +92,26 @@ fun BookmarksContent(
             modifier = Modifier
                 .padding(top = MaterialTheme.dimens.padding.paddingLarge)
         ) {
-            items(bookmarks) { bookmark ->
-                // TODO: implement swipe
-                BookmarkItem(
-                    bookmark = bookmark,
-                    onNavigateToAnilist = onNavigateToAnilist,
+            items(bookmarks, { bookmark -> bookmark.id }) { bookmark ->
+                val dismissState = rememberDismissState(
+                    confirmStateChange = {
+                        if (
+                            it == DismissValue.DismissedToEnd ||
+                            it == DismissValue.DismissedToStart
+                        ) onDeleteBookmark(bookmark.id)
+                        true
+                    }
                 )
+
+                SwipeToDismiss(
+                    state = dismissState,
+                    background = { }
+                ) {
+                    BookmarkItem(
+                        bookmark = bookmark,
+                        onNavigateToAnilist = onNavigateToAnilist,
+                    )
+                }
             }
         }
     }

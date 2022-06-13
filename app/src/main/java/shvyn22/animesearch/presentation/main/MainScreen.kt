@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -26,6 +27,7 @@ import shvyn22.animesearch.util.ActionsState
 import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.image.ImagePicker
 
+@ExperimentalMaterialApi
 @Composable
 fun MainScreen(
     imagePicker: ImagePicker,
