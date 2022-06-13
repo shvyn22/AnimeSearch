@@ -10,17 +10,17 @@ class PreferencesManagerImpl(
     private val dataStore: DataStore<Preferences>
 ) : PreferencesManager {
 
-    override val nightMode = dataStore.data.map {
-        it[PreferencesKeys.NIGHT_MODE] ?: false
+    override val isDarkTheme = dataStore.data.map {
+        it[PreferencesKeys.DARK_THEME] ?: false
     }
 
-    override suspend fun editNightMode(nightMode: Boolean) {
+    override suspend fun editThemePreferences(newThemeValue: Boolean) {
         dataStore.edit {
-            it[PreferencesKeys.NIGHT_MODE] = nightMode
+            it[PreferencesKeys.DARK_THEME] = newThemeValue
         }
     }
 
     private object PreferencesKeys {
-        val NIGHT_MODE = booleanPreferencesKey("nightMode")
+        val DARK_THEME = booleanPreferencesKey("isDarkTheme")
     }
 }

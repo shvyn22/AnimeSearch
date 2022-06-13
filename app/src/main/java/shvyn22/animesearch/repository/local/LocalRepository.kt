@@ -5,11 +5,11 @@ import shvyn22.animesearch.util.Resource
 
 interface LocalRepository<T> {
 
-    suspend fun getItems(): Flow<Resource<List<T>>>
+    suspend fun getBookmarks(): Flow<Resource<List<T>>>
 
-    suspend fun insertItem(item: T)
+    suspend fun insertBookmark(item: T)
 
-    suspend fun deleteItem(id: Int)
+    suspend fun deleteBookmark(id: Int)
 
-    suspend fun deleteItems()
+    suspend fun deleteBookmarks()
 }

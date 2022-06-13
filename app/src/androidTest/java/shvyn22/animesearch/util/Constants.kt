@@ -1,9 +1,9 @@
 package shvyn22.animesearch.util
 
 import shvyn22.animesearch.data.local.model.Bookmark
-import shvyn22.animesearch.data.remote.AnilistInfo
-import shvyn22.animesearch.data.remote.AnimeDTO
-import shvyn22.animesearch.data.remote.TitleInfo
+import shvyn22.animesearch.data.remote.dto.AnilistInfo
+import shvyn22.animesearch.data.remote.dto.AnimeDTO
+import shvyn22.animesearch.data.remote.dto.TitleInfo
 
 const val ERROR_FETCHING = "error fetching data"
 const val TEST_DATASTORE_FILENAME = "test_preferences"

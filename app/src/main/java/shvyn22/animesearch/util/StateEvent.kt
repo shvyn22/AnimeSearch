@@ -4,4 +4,3 @@ sealed class StateEvent {
     data class NavigateToAnilist(val id: Int) : StateEvent()
     data class ShowError(val error: ResourceError) : StateEvent()
 }
-

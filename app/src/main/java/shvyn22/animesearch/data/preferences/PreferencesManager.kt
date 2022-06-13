@@ -2,10 +2,9 @@ package shvyn22.animesearch.data.preferences
 
 import kotlinx.coroutines.flow.Flow
 
-
 interface PreferencesManager {
 
-    val nightMode: Flow<Boolean>
+    val isDarkTheme: Flow<Boolean>
 
-    suspend fun editNightMode(nightMode: Boolean)
+    suspend fun editThemePreferences(newThemeValue: Boolean)
 }

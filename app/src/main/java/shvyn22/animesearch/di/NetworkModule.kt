@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import shvyn22.animesearch.api.ApiInterface
+import shvyn22.animesearch.data.remote.api.ApiService
 import shvyn22.animesearch.util.BASE_URL
 import javax.inject.Singleton
 
@@ -24,6 +24,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiInterface(retrofit: Retrofit): ApiInterface =
-        retrofit.create(ApiInterface::class.java)
+    fun provideApiService(retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
 }

@@ -1,6 +1,9 @@
 package shvyn22.animesearch.data.local.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import shvyn22.animesearch.data.local.model.Bookmark
 
@@ -8,14 +11,14 @@ import shvyn22.animesearch.data.local.model.Bookmark
 interface BookmarkDao {
 
     @Query("SELECT * FROM Bookmark")
-    fun getItems(): Flow<List<Bookmark>>
+    fun getBookmarks(): Flow<List<Bookmark>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(item: Bookmark)
+    suspend fun insertBookmark(item: Bookmark)
 
     @Query("DELETE FROM Bookmark WHERE id = :id")
-    suspend fun delete(id: Int)
+    suspend fun deleteBookmark(id: Int)
 
     @Query("DELETE FROM Bookmark")
-    suspend fun deleteAll()
+    suspend fun deleteBookmarks()
 }

@@ -8,40 +8,40 @@ import androidx.lifecycle.LifecycleOwner
 import shvyn22.animesearch.util.REGISTRY_KEY
 
 class ImagePickerImpl(
-	registry: ActivityResultRegistry,
-	lifecycleOwner: LifecycleOwner,
-	private val cameraUri: Uri,
+    registry: ActivityResultRegistry,
+    lifecycleOwner: LifecycleOwner,
+    private val cameraUri: Uri,
 ) : ImagePicker {
-	private var processResult: ((Uri?) -> Unit)? = null
 
-	private val getImageFromFile = registry.register(
-		REGISTRY_KEY,
-		lifecycleOwner,
-		GetContent()
-	) { uri: Uri? ->
-		processResult?.invoke(uri)
-	}
+    private var processResult: ((Uri?) -> Unit)? = null
 
+    private val getImageFromFile = registry.register(
+        REGISTRY_KEY,
+        lifecycleOwner,
+        GetContent()
+    ) { uri: Uri? ->
+        processResult?.invoke(uri)
+    }
 
-	private val getImageFromCamera = registry.register(
-		REGISTRY_KEY,
-		lifecycleOwner,
-		TakePicture()
-	) {
-		processResult?.invoke(if (it) cameraUri else null)
-	}
+    private val getImageFromCamera = registry.register(
+        REGISTRY_KEY,
+        lifecycleOwner,
+        TakePicture()
+    ) {
+        processResult?.invoke(if (it) cameraUri else null)
+    }
 
-	override fun pickImageFromFile(
-		callback: (Uri?) -> Unit
-	) {
-		processResult = callback
-		getImageFromFile.launch("image/*")
-	}
+    override fun pickImageFromFile(
+        callback: (Uri?) -> Unit
+    ) {
+        processResult = callback
+        getImageFromFile.launch("image/*")
+    }
 
-	override fun pickImageFromCamera(
-		callback: (Uri?) -> Unit
-	) {
-		processResult = callback
-		getImageFromCamera.launch(cameraUri)
-	}
+    override fun pickImageFromCamera(
+        callback: (Uri?) -> Unit
+    ) {
+        processResult = callback
+        getImageFromCamera.launch(cameraUri)
+    }
 }

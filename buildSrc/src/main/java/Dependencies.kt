@@ -1,7 +1,7 @@
 object Dependencies {
 
     object Kotlin {
-        private const val kotlinVersion = "1.6.0"
+        private const val kotlinVersion = "1.6.10"
         private const val ktxVersion = "1.7.0"
 
         const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -105,7 +105,7 @@ object Dependencies {
     }
 
     object Compose {
-        internal const val composeVersion = "1.1.0-rc01"
+        internal const val composeVersion = "1.1.1"
         private const val constraintComposeVersion = "1.0.0-rc02"
         private const val accompanistVersion = "0.17.0"
 

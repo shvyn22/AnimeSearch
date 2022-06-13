@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Bookmark")
 data class Bookmark(
 
-    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "id")
     val id: Int,
 
     @ColumnInfo(name = "title")

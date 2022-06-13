@@ -13,7 +13,8 @@ import dagger.hilt.android.qualifiers.ActivityContext
 @InstallIn(ActivityComponent::class)
 object ActivityModule {
 
-	@Provides
-	fun provideRegistry(@ActivityContext activity: Context): ActivityResultRegistry =
-		(activity as AppCompatActivity).activityResultRegistry
+    @Provides
+    fun provideRegistry(
+        @ActivityContext activity: Context
+    ): ActivityResultRegistry = (activity as AppCompatActivity).activityResultRegistry
 }

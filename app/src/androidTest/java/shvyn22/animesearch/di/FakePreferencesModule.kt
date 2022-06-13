@@ -16,6 +16,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import shvyn22.animesearch.data.preferences.PreferencesManager
 import shvyn22.animesearch.data.preferences.PreferencesManagerImpl
 import shvyn22.animesearch.util.TEST_DATASTORE_FILENAME
@@ -33,7 +34,7 @@ object FakePreferencesModule {
     @Singleton
     @Provides
     fun provideScope(): CoroutineScope =
-        CoroutineScope(StandardTestDispatcher() + Job())
+        CoroutineScope(UnconfinedTestDispatcher() + Job())
 
     @Singleton
     @Provides

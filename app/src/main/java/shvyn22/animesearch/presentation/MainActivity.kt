@@ -17,32 +17,31 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-	@Inject
-	lateinit var registry: ActivityResultRegistry
+    @Inject
+    lateinit var registry: ActivityResultRegistry
 
-	private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-		val imagePicker = ImagePickerImpl(
-			registry = registry,
-			lifecycleOwner = this,
-			cameraUri = createTempUri()
-		)
+        val imagePicker = ImagePickerImpl(
+            registry = registry,
+            lifecycleOwner = this,
+            cameraUri = createTempUri()
+        )
 
-		setContent {
-			val nightMode = viewModel.nightMode.collectAsState()
+        setContent {
+            val isDarkTheme = viewModel.isDarkTheme.collectAsState()
 
-			AppTheme(
-				isNightMode = nightMode.value
-			) {
-				MainScreen(
-					isNightMode = nightMode.value,
-					onToggleMode = viewModel::onToggleModeIcon,
-					imagePicker = imagePicker
-				)
-			}
-		}
-	}
+            AppTheme(
+                isDarkTheme = isDarkTheme.value
+            ) {
+                MainScreen(
+                    onToggleTheme = viewModel::editThemePreferences,
+                    imagePicker = imagePicker
+                )
+            }
+        }
+    }
 }

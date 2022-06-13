@@ -36,230 +36,234 @@ import shvyn22.animesearch.util.image.ImagePicker
 
 @Composable
 fun SearchScreen(
-	imagePicker: ImagePicker,
-	onNavigateToBookmarks: () -> Unit,
-	onNavigateToAnilist: (Int) -> Unit,
-	onErrorOccurred: (ResourceError) -> Unit,
-	modifier: Modifier = Modifier,
-	viewModel: SearchViewModel = hiltViewModel(),
+    imagePicker: ImagePicker,
+    onNavigateToBookmarks: () -> Unit,
+    onNavigateToAnilist: (Int) -> Unit,
+    onErrorOccurred: (ResourceError) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel(),
 ) {
-	val context = LocalContext.current
+    val context = LocalContext.current
 
-	val processResult = { uri: Uri? ->
-		if (uri == null)
-			viewModel.onErrorOccurred(
-				ResourceError.Specified(context.getString(R.string.text_error_loading))
-			)
-		else
-			viewModel.updateSelectedImage(uri.toString())
-	}
-	val requestPermission = rememberLauncherForActivityResult(RequestPermission()) {
-		if (!it) viewModel.onErrorOccurred(
-			ResourceError.Specified(context.getString(R.string.text_error_permission))
-		)
-	}
+    val processResult = { uri: Uri? ->
+        if (uri == null)
+            viewModel.onErrorOccurred(
+                ResourceError.Specified(context.getString(R.string.text_error_loading))
+            )
+        else
+            viewModel.updateSelectedImage(uri.toString())
+    }
 
-	val events = viewModel.events.collectAsState(initial = null)
-	events.value?.let {
-		if (it is StateEvent.NavigateToAnilist) onNavigateToAnilist(it.id)
-		else if (it is StateEvent.ShowError) onErrorOccurred(it.error)
-	}
+    val requestPermission = rememberLauncherForActivityResult(RequestPermission()) {
+        if (!it) viewModel.onErrorOccurred(
+            ResourceError.Specified(context.getString(R.string.text_error_permission))
+        )
+    }
 
-	val uri = viewModel.uri.collectAsState()
-	val searchResults = viewModel.searchResults.collectAsState()
+    val events = viewModel.events.collectAsState(initial = null)
+    events.value?.let {
+        when (it) {
+            is StateEvent.NavigateToAnilist -> onNavigateToAnilist(it.id)
+            is StateEvent.ShowError -> onErrorOccurred(it.error)
+        }
+    }
 
-	SearchContent(
-		previewUri = uri.value,
-		searchResource = searchResults.value,
-		onGetImageFromFile = { imagePicker.pickImageFromFile(processResult) },
-		onGetImageFromCamera = {
-			if (context.checkSelfPermission(
-					Manifest.permission.CAMERA
-				) == PackageManager.PERMISSION_GRANTED
-			)
-				imagePicker.pickImageFromCamera(processResult)
-			else
-				requestPermission.launch(Manifest.permission.CAMERA)
-		},
-		onSearch = viewModel::searchImage,
-		onAddToBookmarks = viewModel::onAddToBookmarks,
-		onRemoveFromBookmarks = viewModel::onRemoveFromBookmarks,
-		onNavigateToBookmarks = onNavigateToBookmarks,
-		onNavigateToAnilist = viewModel::onNavigateToAnilist,
-		onErrorOccurred = viewModel::onErrorOccurred,
-		modifier = modifier
-	)
+    val uri = viewModel.uri.collectAsState()
+    val resource = viewModel.searchResults.collectAsState()
+
+    SearchContent(
+        previewUri = uri.value,
+        resource = resource.value,
+        onGetImageFromFile = { imagePicker.pickImageFromFile(processResult) },
+        onGetImageFromCamera = {
+            if (context
+                    .checkSelfPermission(
+                        Manifest.permission.CAMERA
+                    ) == PackageManager.PERMISSION_GRANTED
+            )
+                imagePicker.pickImageFromCamera(processResult)
+            else
+                requestPermission.launch(Manifest.permission.CAMERA)
+        },
+        onSearch = viewModel::searchImage,
+        onInsertBookmark = viewModel::insertBookmark,
+        onDeleteBookmark = viewModel::deleteBookmark,
+        onNavigateToAnilist = viewModel::onNavigateToAnilist,
+        onErrorOccurred = viewModel::onErrorOccurred,
+        onNavigateToBookmarks = onNavigateToBookmarks,
+        modifier = modifier
+    )
 }
 
 @Composable
 fun SearchContent(
-	previewUri: String,
-	searchResource: Resource<List<AnimeModel>>,
-	onGetImageFromFile: () -> Unit,
-	onGetImageFromCamera: () -> Unit,
-	onSearch: (ByteArray) -> Unit,
-	onAddToBookmarks: (AnimeModel) -> Unit,
-	onRemoveFromBookmarks: (Int) -> Unit,
-	onNavigateToBookmarks: () -> Unit,
-	onNavigateToAnilist: (Int) -> Unit,
-	onErrorOccurred: (ResourceError) -> Unit,
-	modifier: Modifier = Modifier,
+    previewUri: String,
+    resource: Resource<List<AnimeModel>>,
+    onGetImageFromFile: () -> Unit,
+    onGetImageFromCamera: () -> Unit,
+    onSearch: (ByteArray) -> Unit,
+    onInsertBookmark: (AnimeModel) -> Unit,
+    onDeleteBookmark: (Int) -> Unit,
+    onNavigateToAnilist: (Int) -> Unit,
+    onErrorOccurred: (ResourceError) -> Unit,
+    onNavigateToBookmarks: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-	ConstraintLayout(
-		modifier = modifier
-			.fillMaxWidth()
-	) {
-		val (
-			btnBookmarks,
-			btnFromFile,
-			btnFromCamera,
-			searchPreview,
-			pbLoading,
-			listResult,
-		) = createRefs()
+    ConstraintLayout(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        val (
+            btnBookmarks,
+            btnFromFile,
+            btnFromCamera,
+            searchPreview,
+            pbLoading,
+            listResult,
+        ) = createRefs()
 
-		DrawableButton(
-			onClick = { onNavigateToBookmarks() },
-			text = stringResource(id = R.string.text_navigate_to_bookmarks),
-			textStyle = MaterialTheme.typography.body2,
-			icon = painterResource(id = R.drawable.ic_not_bookmarked),
-			iconSize = MaterialTheme.dimens.size.smallIconSize,
-			padding = MaterialTheme.dimens.padding.paddingSmall,
-			modifier = Modifier
-				.constrainAs(btnBookmarks) {
-					top.linkTo(parent.top)
-					end.linkTo(parent.end)
-				}
-				.padding(bottom = MaterialTheme.dimens.padding.paddingLarge)
-		)
+        DrawableButton(
+            onClick = { onNavigateToBookmarks() },
+            text = stringResource(id = R.string.text_navigate_to_bookmarks),
+            textStyle = MaterialTheme.typography.body2,
+            icon = painterResource(id = R.drawable.ic_not_bookmarked),
+            iconSize = MaterialTheme.dimens.size.smallIconSize,
+            padding = MaterialTheme.dimens.padding.paddingSmall,
+            modifier = Modifier
+                .constrainAs(btnBookmarks) {
+                    top.linkTo(parent.top)
+                    end.linkTo(parent.end)
+                }
+                .padding(bottom = MaterialTheme.dimens.padding.paddingLarge)
+        )
 
-		DrawableButton(
-			onClick = { onGetImageFromFile() },
-			text = stringResource(id = R.string.text_upload_from_file),
-			textStyle = MaterialTheme.typography.body1,
-			icon = painterResource(id = R.drawable.ic_file),
-			iconSize = MaterialTheme.dimens.size.largeIconSize,
-			padding = MaterialTheme.dimens.padding.paddingSmall,
-			modifier = Modifier
-				.constrainAs(btnFromFile) {
-					top.linkTo(btnBookmarks.bottom)
-					bottom.linkTo(btnFromCamera.bottom)
-					start.linkTo(parent.start)
-					end.linkTo(btnFromCamera.start)
-				}
-				.padding(MaterialTheme.dimens.padding.paddingContentSmall),
-			style = DrawableButtonStyle.Rectangular,
-		)
+        DrawableButton(
+            onClick = { onGetImageFromFile() },
+            text = stringResource(id = R.string.text_upload_from_file),
+            textStyle = MaterialTheme.typography.body1,
+            icon = painterResource(id = R.drawable.ic_file),
+            iconSize = MaterialTheme.dimens.size.largeIconSize,
+            padding = MaterialTheme.dimens.padding.paddingSmall,
+            style = DrawableButtonStyle.Rectangular,
+            modifier = Modifier
+                .constrainAs(btnFromFile) {
+                    top.linkTo(btnBookmarks.bottom)
+                    bottom.linkTo(btnFromCamera.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(btnFromCamera.start)
+                }
+                .padding(MaterialTheme.dimens.padding.paddingContentSmall),
+        )
 
-		DrawableButton(
-			onClick = { onGetImageFromCamera() },
-			text = stringResource(id = R.string.text_upload_from_camera),
-			textStyle = MaterialTheme.typography.body1,
-			icon = painterResource(id = R.drawable.ic_camera),
-			iconSize = MaterialTheme.dimens.size.largeIconSize,
-			padding = MaterialTheme.dimens.padding.paddingSmall,
-			modifier = Modifier
-				.constrainAs(btnFromCamera) {
-					top.linkTo(btnBookmarks.bottom)
-					start.linkTo(btnFromFile.end)
-					end.linkTo(parent.end)
-				}
-				.padding(MaterialTheme.dimens.padding.paddingContentSmall),
-			style = DrawableButtonStyle.Rectangular,
-		)
+        DrawableButton(
+            onClick = { onGetImageFromCamera() },
+            text = stringResource(id = R.string.text_upload_from_camera),
+            textStyle = MaterialTheme.typography.body1,
+            icon = painterResource(id = R.drawable.ic_camera),
+            iconSize = MaterialTheme.dimens.size.largeIconSize,
+            padding = MaterialTheme.dimens.padding.paddingSmall,
+            style = DrawableButtonStyle.Rectangular,
+            modifier = Modifier
+                .constrainAs(btnFromCamera) {
+                    top.linkTo(btnBookmarks.bottom)
+                    start.linkTo(btnFromFile.end)
+                    end.linkTo(parent.end)
+                }
+                .padding(MaterialTheme.dimens.padding.paddingContentSmall),
+        )
 
-		if (previewUri.isNotEmpty()) {
-			SearchPreview(
-				previewUri = previewUri,
-				onSearch = onSearch,
-				modifier = Modifier
-					.constrainAs(searchPreview) {
-						top.linkTo(btnFromCamera.bottom)
-						start.linkTo(parent.start)
-						end.linkTo(parent.end)
-					}
-					.padding(top = MaterialTheme.dimens.padding.paddingLarge)
-			)
-		}
+        if (previewUri.isNotEmpty()) {
+            SearchPreview(
+                previewUri = previewUri,
+                onSearch = onSearch,
+                modifier = Modifier
+                    .constrainAs(searchPreview) {
+                        top.linkTo(btnFromCamera.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                    .padding(top = MaterialTheme.dimens.padding.paddingLarge)
+            )
+        }
 
-		when (searchResource) {
-			is Resource.Loading -> CircularProgressIndicator(
-				modifier = Modifier
-					.constrainAs(pbLoading) {
-						top.linkTo(parent.top)
-						bottom.linkTo(parent.bottom)
-						start.linkTo(parent.start)
-						end.linkTo(parent.end)
-					}
-			)
-			is Resource.Error -> onErrorOccurred(searchResource.error)
-			is Resource.Success -> {
-				LazyColumn(
-					modifier = Modifier
-						.padding(top = MaterialTheme.dimens.padding.paddingLarge)
-						.constrainAs(listResult) {
-							top.linkTo(searchPreview.bottom)
-							bottom.linkTo(parent.bottom)
-							start.linkTo(parent.start)
-							end.linkTo(parent.end)
-							height = Dimension.fillToConstraints
-						}
-				) {
-					items(searchResource.data) { model ->
-						ResultItem(
-							model = model,
-							onAddToBookmarks = onAddToBookmarks,
-							onRemoveFromBookmarks = onRemoveFromBookmarks,
-							onNavigateToAnilist = onNavigateToAnilist
-						)
-					}
-				}
-			}
-			else -> Unit
-		}
-	}
+        when (resource) {
+            is Resource.Loading -> CircularProgressIndicator(
+                modifier = Modifier
+                    .constrainAs(pbLoading) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+            )
+            is Resource.Error -> onErrorOccurred(resource.error)
+            is Resource.Success -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(top = MaterialTheme.dimens.padding.paddingLarge)
+                        .constrainAs(listResult) {
+                            top.linkTo(searchPreview.bottom)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            height = Dimension.fillToConstraints
+                        }
+                ) {
+                    items(resource.data) { model ->
+                        ResultItem(
+                            model = model,
+                            onInsertBookmark = onInsertBookmark,
+                            onDeleteBookmark = onDeleteBookmark,
+                            onNavigateToAnilist = onNavigateToAnilist
+                        )
+                    }
+                }
+            }
+            else -> Unit
+        }
+    }
 }
 
 @Composable
 fun SearchPreview(
-	previewUri: String,
-	onSearch: (ByteArray) -> Unit,
-	modifier: Modifier = Modifier,
+    previewUri: String,
+    onSearch: (ByteArray) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-	Row(
-		verticalAlignment = Alignment.CenterVertically,
-		horizontalArrangement = Arrangement.SpaceEvenly,
-		modifier = modifier
-			.fillMaxWidth(),
-	) {
-		Image(
-			painter = rememberImagePainter(
-				data = previewUri.toUri(),
-				builder = {
-					error(R.drawable.ic_error)
-					crossfade(true)
-				}
-			),
-			contentDescription = stringResource(id = R.string.text_accessibility_preview),
-			modifier = Modifier
-				.size(
-					width = MaterialTheme.dimens.size.widthImage,
-					height = MaterialTheme.dimens.size.heightImage
-				)
-		)
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = modifier
+            .fillMaxWidth(),
+    ) {
+        Image(
+            painter = rememberImagePainter(
+                data = previewUri.toUri(),
+                builder = {
+                    error(R.drawable.ic_error)
+                    crossfade(true)
+                }
+            ),
+            contentDescription = stringResource(id = R.string.text_accessibility_preview),
+            modifier = Modifier
+                .size(
+                    width = MaterialTheme.dimens.size.widthImage,
+                    height = MaterialTheme.dimens.size.heightImage
+                )
+        )
 
-		val bytes = LocalContext.current
-			.contentResolver
-			.openInputStream(previewUri.toUri())
-			?.readBytes()
+        val bytes = LocalContext.current
+            .contentResolver
+            .openInputStream(previewUri.toUri())
+            ?.readBytes()
 
-		DrawableButton(
-			onClick = { bytes?.let { onSearch(it) } },
-			text = stringResource(id = R.string.text_search),
-			textStyle = MaterialTheme.typography.body2,
-			icon = painterResource(id = R.drawable.ic_search),
-			iconSize = MaterialTheme.dimens.size.smallIconSize,
-			padding = MaterialTheme.dimens.padding.paddingSmall
-		)
-	}
+        DrawableButton(
+            onClick = { bytes?.let { onSearch(it) } },
+            text = stringResource(id = R.string.text_search),
+            textStyle = MaterialTheme.typography.body2,
+            icon = painterResource(id = R.drawable.ic_search),
+            iconSize = MaterialTheme.dimens.size.smallIconSize,
+            padding = MaterialTheme.dimens.padding.paddingSmall
+        )
+    }
 }

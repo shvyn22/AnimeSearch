@@ -13,8 +13,8 @@ import shvyn22.animesearch.data.local.model.Bookmark
 import shvyn22.animesearch.data.util.fromAnimeModelToBookmark
 import shvyn22.animesearch.repository.local.LocalRepository
 import shvyn22.animesearch.repository.remote.RemoteRepository
-import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.Resource
+import shvyn22.animesearch.util.ResourceError
 import shvyn22.animesearch.util.StateEvent
 import javax.inject.Inject
 
@@ -45,15 +45,15 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onAddToBookmarks(item: AnimeModel) {
+    fun insertBookmark(item: AnimeModel) {
         viewModelScope.launch {
-            localRepository.insertItem(fromAnimeModelToBookmark(item))
+            localRepository.insertBookmark(fromAnimeModelToBookmark(item))
         }
     }
 
-    fun onRemoveFromBookmarks(id: Int) {
+    fun deleteBookmark(id: Int) {
         viewModelScope.launch {
-            localRepository.deleteItem(id)
+            localRepository.deleteBookmark(id)
         }
     }
 

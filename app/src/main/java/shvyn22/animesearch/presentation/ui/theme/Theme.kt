@@ -7,11 +7,11 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun AppTheme(
-    isNightMode: Boolean,
+    isDarkTheme: Boolean,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(LocalDimens provides Dimens()) {
-        val colors = if (isNightMode) DarkColors else LightColors
+        val colors = if (isDarkTheme) DarkColors else LightColors
 
         val systemUiController = rememberSystemUiController()
         systemUiController.setStatusBarColor(colors.primaryVariant)
