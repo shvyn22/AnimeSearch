@@ -28,12 +28,12 @@ This application is based on [trace.moe API](https://soruly.github.io/trace.moe-
   * **[Navigation components](https://developer.android.com/jetpack/androidx/releases/navigation)**.
 * **[Jetpack Compose](https://developer.android.com/jetpack/compose)** as modern declarative UI toolkit (**/compose** branch).
 * Modern XML UI toolkit.
-  * **[Material components](https://material.io/develop/android)**
-  * **ViewBinding** for binding .xml views to objects in Activities and Fragments
+  * **[Material components](https://material.io/develop/android)**.
+  * **ViewBinding** for binding .xml views to objects in Activities and Fragments.
 * Api-based remote data layer.
   * **[Retrofit](https://square.github.io/retrofit/)** for network queries.
   * **[GSON](https://github.com/google/gson)** for parsing JSON.
-* **[DataStore](https://developer.android.com/jetpack/androidx/releases/datastore)** for working with user preferences (e.g. light/dark mode)
+* **[DataStore](https://developer.android.com/jetpack/androidx/releases/datastore)** for working with user preferences (e.g. light/dark mode).
 * **[Room](https://developer.android.com/jetpack/androidx/releases/room)** for local data layer.
 * **[Lifecycle components](https://developer.android.com/jetpack/androidx/releases/lifecycle)**.
   * **ViewModel** for implementing MVVM pattern.
@@ -48,12 +48,12 @@ This application is based on [trace.moe API](https://soruly.github.io/trace.moe-
 
 ## Key features
 #### i.e. what is unique among other samples?
-* **POST** requests with **Multipart body**
-* **FragmentResultAPI** for getting images from camera/file
-  * Fragment dependencies (ResultRegistry) utilizing custom **NavHostFragment** and **FragmentFactory**
-* Dynamic layout based on user actions (showing some parts of UI)
-* **Material You** widgets
-* [Hilt] **ActivityComponent** usage / [Dagger2] Subcomponent implementation
+* **POST** requests with **Multipart body**.
+* **FragmentResultAPI** for getting images from camera/file.
+  * Fragment dependencies (**ResultRegistry**) utilizing custom **NavHostFragment** and **FragmentFactory**.
+* Dynamic layout based on user actions (showing some parts of UI).
+* **Material You** widgets.
+* [Hilt] **ActivityComponent** usage / [Dagger2] Subcomponent implementation.
 
 ## License
 ```
